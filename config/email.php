@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed.');
 
-$config['useragent']        = 'CodeIgniter';
+$config['useragent']        = 'PHPMailer';              // Mail engine switcher: 'CodeIgniter' or 'PHPMailer'
 $config['protocol']         = 'mail';                   // 'mail', 'sendmail', or 'smtp'
 $config['mailpath']         = '/usr/sbin/sendmail';
 $config['smtp_host']        = 'localhost';
@@ -8,7 +8,7 @@ $config['smtp_user']        = '';
 $config['smtp_pass']        = '';
 $config['smtp_port']        = 25;
 $config['smtp_timeout']     = 5;                        // (in seconds)
-$config['smtp_secure']      = '';                       // '' or 'tls' or 'ssl'
+$config['smtp_crypto']      = '';                       // '' or 'tls' or 'ssl'
 $config['wordwrap']         = true;
 $config['wrapchars']        = 76;
 $config['mailtype']         = 'html';                   // 'text' or 'html'
