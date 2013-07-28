@@ -82,7 +82,7 @@ Notes:
             // Also, for getting full html you may use the following internal method:
             //$body = $this->email->full_html($subject, $message);
 
-            $this->email
+            $result = $this->email
                 ->from('yourusername@gmail.com')
                 ->reply_to('yoursecondemail@somedomain.cpm')    // Optional, an account where a human being reads.
                 ->to('therecipient@otherdomain.com')
@@ -90,6 +90,8 @@ Notes:
                 ->message($body)
                 ->send();
 
+            var_dump($result);
+            echo '<br />';
             echo $this->email->print_debugger();
 
             exit;
