@@ -97,7 +97,7 @@ Notes:
 
 Load the corresponding page, executte this code. Check whether an email has been sent. Read the error message, if any, and make corrections in your settings.
 
-Note, that most of the SMTP servers require "from" address of the message to be the same as within $config['smtp_user'] setting.
+Note, that most of the SMTP servers require "from" address of the message to be the same as the address within $config['smtp_user'] setting.
 
 At the end remove this test.
 
