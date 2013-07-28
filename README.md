@@ -20,7 +20,7 @@ http://phpmailer.worxware.com/
 
 https://github.com/Synchro/PHPMailer
 
-Setting It Up (Example)
+Setting It Up (An Example)
 -----------------------
 
 1. Edit the file `application/config/email.php` which contains the default settings for the email engine. For a Gmail account, the setting might be something like this:
