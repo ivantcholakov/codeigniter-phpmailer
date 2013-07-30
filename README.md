@@ -84,7 +84,7 @@ Notes:
 
             $result = $this->email
                 ->from('yourusername@gmail.com')
-                ->reply_to('yoursecondemail@somedomain.cpm')    // Optional, an account where a human being reads.
+                ->reply_to('yoursecondemail@somedomain.com')    // Optional, an account where a human being reads.
                 ->to('therecipient@otherdomain.com')
                 ->subject($subject)
                 ->message($body)
