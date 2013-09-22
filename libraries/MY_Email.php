@@ -92,9 +92,9 @@ class MY_Email extends CI_Email {
             if ($this->mailer_engine == 'phpmailer') {
                 $this->_copy_property_to_phpmailer('_smtp_auth');
             }
-
-            $this->_safe_mode = ((bool) @ini_get('safe_mode') === FALSE) ? FALSE : TRUE;
         }
+
+        $this->_safe_mode = ( ! is_php('5.4') && (bool) @ini_get('safe_mode'));
 
         log_message('debug', 'MY_Email Class Initialized (Engine: '.$this->mailer_engine.')');
     }
@@ -156,8 +156,6 @@ class MY_Email extends CI_Email {
         if ($this->mailer_engine == 'phpmailer') {
             $this->_copy_property_to_phpmailer('_smtp_auth');
         }
-
-        $this->_safe_mode = ((bool) @ini_get('safe_mode') === FALSE) ? FALSE : TRUE;
 
         return $this;
     }
