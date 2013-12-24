@@ -2,13 +2,13 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 0.9
+ * Version: 1.0-rc
  * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2013.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
- * Tested on production sites with CodeIgniter 3.0-dev (July 2013) and
- * PHPMailer Version 5.2.1 (January 16, 2012).
+ * Tested on production sites with CodeIgniter 3.0-dev (December 2013) and
+ * PHPMailer Version 5.2.7 (September 12th 2013).
  */
 
 class MY_Email extends CI_Email {
@@ -72,9 +72,10 @@ class MY_Email extends CI_Email {
 
             // If your system uses class autoloading feature,
             // then the following require statement would not be needed.
-            if (!class_exists('PHPMailer')) {
-                require APPPATH.'third_party/phpmailer/class.phpmailer.php';
+            if (!class_exists('PHPMailer', false)) {
+                require_once APPPATH.'third_party/phpmailer/PHPMailerAutoload.php';
             }
+            //
 
             $this->phpmailer = new PHPMailer();
             $this->phpmailer->PluginDir = APPPATH.'third_party/phpmailer/';
@@ -169,13 +170,13 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
 
-            $this->phpmailer->ClearAllRecipients();
-            $this->phpmailer->ClearReplyTos();
+            $this->phpmailer->clearAllRecipients();
+            $this->phpmailer->clearReplyTos();
             if ($clear_attachments) {
-                $this->phpmailer->ClearAttachments();
+                $this->phpmailer->clearAttachments();
             }
 
-            $this->phpmailer->ClearCustomHeaders();
+            $this->phpmailer->clearCustomHeaders();
 
             $this->phpmailer->Subject = '';
             $this->phpmailer->Body = '';
@@ -196,15 +197,15 @@ class MY_Email extends CI_Email {
             switch ($this->protocol) {
 
                 case 'mail':
-                    $this->phpmailer->IsMail();
+                    $this->phpmailer->isMail();
                     break;
 
                 case 'sendmail':
-                    $this->phpmailer->IsSendmail();
+                    $this->phpmailer->isSendmail();
                     break;
 
                 case 'smtp':
-                    $this->phpmailer->IsSMTP();
+                    $this->phpmailer->isSMTP();
                     break;
             }
         }
@@ -250,7 +251,7 @@ class MY_Email extends CI_Email {
         $this->mailtype = in_array($type, self::$mailtypes) ? $type : 'text';
 
         if ($this->mailer_engine == 'phpmailer') {
-            $this->phpmailer->IsHTML($this->mailtype == 'html');
+            $this->phpmailer->isHTML($this->mailtype == 'html');
         }
 
         return $this;
@@ -293,7 +294,7 @@ class MY_Email extends CI_Email {
                 }
             }
 
-            $this->phpmailer->SetFrom($from, $name, 0);
+            $this->phpmailer->setFrom($from, $name, 0);
 
             if (!$return_path) {
                 $return_path = $from;
@@ -332,7 +333,7 @@ class MY_Email extends CI_Email {
                 $name = $replyto;
             }
 
-            $this->phpmailer->AddReplyTo($replyto, $name);
+            $this->phpmailer->addReplyTo($replyto, $name);
 
             $this->_replyto_flag = TRUE;
 
@@ -361,7 +362,7 @@ class MY_Email extends CI_Email {
             foreach ($to as $address) {
 
                 list($key, $name) = each($names);
-                $this->phpmailer->AddAddress($address, $name);
+                $this->phpmailer->addAddress($address, $name);
             }
 
         } else {
@@ -389,7 +390,7 @@ class MY_Email extends CI_Email {
             foreach ($cc as $address) {
 
                 list($key, $name) = each($names);
-                $this->phpmailer->AddCC($address, $name);
+                $this->phpmailer->addCC($address, $name);
             }
 
         } else {
@@ -417,7 +418,7 @@ class MY_Email extends CI_Email {
             foreach ($bcc as $address) {
 
                 list($key, $name) = each($names);
-                $this->phpmailer->AddBCC($address, $name);
+                $this->phpmailer->addBCC($address, $name);
             }
 
         } else {
@@ -483,7 +484,7 @@ class MY_Email extends CI_Email {
                 $mime = $this->_mime_types(pathinfo($filename, PATHINFO_EXTENSION));
             }
 
-            $this->phpmailer->AddAttachment($filename, $newname, 'base64', $mime);
+            $this->phpmailer->addAttachment($filename, $newname, 'base64', $mime);
 
         } else {
 
@@ -503,7 +504,7 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
 
-            $result = (bool) $this->phpmailer->Send();
+            $result = (bool) $this->phpmailer->send();
 
             if ($result) {
 
