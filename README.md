@@ -1,7 +1,8 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2013.
+Version: 0.9  
+Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2013.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
 Tested on CodeIgniter 2.1.4, CodeIgniter 3.0-dev (October 2013), and with PHPMailer Version 5.2.1 (January 16, 2012).
@@ -12,7 +13,7 @@ Installation
 Download this package and uncompress it within `application/` directory of your CodeIgniter site.
 
 
-Download and uncompress PHPMailer `application/third_party/phpmailer/` directory. For security reasons remove unused folders and files: docs, examples, extras, test, and etc.
+~~Download and uncompress PHPMailer `application/third_party/phpmailer/` directory. For security reasons remove unused folders and files: docs, examples, extras, test, and etc.~~
 
 Links:
 
