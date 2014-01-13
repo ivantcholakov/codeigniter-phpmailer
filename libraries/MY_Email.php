@@ -465,9 +465,9 @@ class MY_Email extends CI_Email {
         return $this;
     }
 
-    public function attach($filename, $disposition = '', $newname = NULL, $mime = '') {
+    public function attach($file, $disposition = '', $newname = NULL, $mime = '') {
 
-        $filename = (string) $filename;
+        $file = (string) $file;
 
         $disposition = (string) $disposition;
 
@@ -481,17 +481,17 @@ class MY_Email extends CI_Email {
             $mime = (string) $mime;
 
             if ($mime == '') {
-                $mime = $this->_mime_types(pathinfo($filename, PATHINFO_EXTENSION));
+                $mime = $this->_mime_types(pathinfo($file, PATHINFO_EXTENSION));
             }
 
-            $this->phpmailer->addAttachment($filename, $newname, 'base64', $mime);
+            $this->phpmailer->addAttachment($file, $newname, 'base64', $mime);
 
         } else {
 
             if ($this->_is_ci_3) {
-                parent::attach($filename, $disposition, $newname, $mime);
+                parent::attach($file, $disposition, $newname, $mime);
             } else {
-                parent::attach($filename, $disposition);
+                parent::attach($file, $disposition);
             }
         }
 
