@@ -527,9 +527,9 @@ class MY_Email extends CI_Email {
         } else {
 
             if ($this->_is_ci_3) {
-                return parent::attach($file, $disposition, $newname, $mime);
+                parent::attach($file, $disposition, $newname, $mime);
             } else {
-                return parent::attach($file, $disposition);
+                parent::attach($file, $disposition);
             }
         }
 
