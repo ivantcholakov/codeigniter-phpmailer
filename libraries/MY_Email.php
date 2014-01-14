@@ -481,21 +481,80 @@ class MY_Email extends CI_Email {
             $mime = (string) $mime;
 
             if ($mime == '') {
+
+                if (strpos($file, '://') === FALSE && ! file_exists($file)) {
+
+                    $this->_set_error_message('lang:email_attachment_missing', $file);
+                    // Modified by Ivan Tcholakov, 14-JAN-2014.
+                    //return FALSE;
+                    return $this;
+                    //
+                }
+
+                if (!$fp = @fopen($file, FOPEN_READ)) {
+
+                    $this->_set_error_message('lang:email_attachment_unreadable', $file);
+                    // Modified by Ivan Tcholakov, 14-JAN-2014.
+                    //return FALSE;
+                    return $this;
+                    //
+                }
+
+                $file_content = stream_get_contents($fp);
                 $mime = $this->_mime_types(pathinfo($file, PATHINFO_EXTENSION));
+                fclose($fp);
+
+                $newname = basename($file);
+
+            } else {
+
+                $file_content =& $file; // Buffered file.
+                // Added by Ivan Tcholakov, 14-JAN-2014.
+                $file = $newname;
+                //
             }
 
-            $this->phpmailer->addAttachment($file, $newname, 'base64', $mime);
+            // This is needed for attachment_cid() method.
+            $this->_attachments[] = array(
+                'name' => array($file, $newname),
+                'disposition' => $disposition,
+                'type' => $mime,
+            );
+            //
+
+            $this->phpmailer->addStringAttachment($string, $newname, 'base64', $mime, $disposition);
 
         } else {
 
             if ($this->_is_ci_3) {
-                parent::attach($file, $disposition, $newname, $mime);
+                return parent::attach($file, $disposition, $newname, $mime);
             } else {
-                parent::attach($file, $disposition);
+                return parent::attach($file, $disposition);
             }
         }
 
         return $this;
+    }
+
+    public function attachment_cid($filename) {
+
+        if ($this->mailer_engine == 'phpmailer') {
+
+            for ($i = 0, $c = count($this->_attachments); $i < $c; $i++) {
+
+                if ($this->_attachments[$i]['name'][0] === $filename) {
+
+                    $this->_attachments[$i]['cid'] = uniqid(basename($this->_attachments[$i]['name'][0]).'@');
+                    return $this->_attachments[$i]['cid'];
+                }
+            }
+
+        } elseif ($this->_is_ci_3) {
+
+            return parent::attachment_cid($filename);
+        }
+
+        return FALSE;
     }
 
     public function send($auto_clear = true) {
