@@ -465,7 +465,10 @@ class MY_Email extends CI_Email {
         return $this;
     }
 
-    public function attach($file, $disposition = '', $newname = NULL, $mime = '') {
+    // Modified by Ivan Tcholakov, 16-JAN-2014.
+    //public function attach($file, $disposition = '', $newname = NULL, $mime = '') {
+    public function attach($file, $disposition = '', $newname = NULL, $mime = '', $embedded_image = false) {
+    //
 
         $file = (string) $file;
 
@@ -514,15 +517,21 @@ class MY_Email extends CI_Email {
                 //
             }
 
-            // This is needed for attachment_cid() method.
             $this->_attachments[] = array(
                 'name' => array($file, $newname),
                 'disposition' => $disposition,
                 'type' => $mime,
             );
-            //
 
-            $this->phpmailer->addStringAttachment($string, $newname, 'base64', $mime, $disposition);
+            if (empty($embedded_image)) {
+
+                $this->phpmailer->addStringAttachment($file_content, $newname, 'base64', $mime, $disposition);
+
+            } else {
+
+                $cid = $this->attachment_cid($file);
+                $this->phpmailer->addStringEmbeddedImage($file_content, $cid, $newname, 'base64', $mime, $disposition);
+            }
 
         } else {
 
@@ -556,6 +565,20 @@ class MY_Email extends CI_Email {
 
         return FALSE;
     }
+
+    // Added by Ivan Tcholakov, 16-JAN-2014.
+    public function get_attachment_cid($filename) {
+
+        for ($i = 0, $c = count($this->_attachments); $i < $c; $i++) {
+
+            if ($this->_attachments[$i]['name'][0] === $filename) {
+                return empty($this->_attachments[$i]['cid']) ? FALSE : $this->_attachments[$i]['cid'];
+            }
+        }
+
+        return FALSE;
+    }
+    //
 
     public function send($auto_clear = true) {
 
