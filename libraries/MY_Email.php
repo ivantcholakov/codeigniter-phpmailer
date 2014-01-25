@@ -79,7 +79,6 @@ class MY_Email extends CI_Email {
 
             $this->phpmailer = new PHPMailer();
             $this->phpmailer->PluginDir = APPPATH.'third_party/phpmailer/';
-            $this->phpmailer->SMTPDebug = 0;
 
             $this->_copy_property_to_phpmailer('charset');
         }
@@ -133,21 +132,18 @@ class MY_Email extends CI_Email {
 
         foreach ($config as $key => $val) {
 
-            if (isset($this->$key)) {
+            $method = 'set_'.$key;
 
-                $method = 'set_'.$key;
+            if (method_exists($this, $method)) {
 
-                if (method_exists($this, $method)) {
+                $this->$method($val);
 
-                    $this->$method($val);
+            } elseif (isset($this->$key)) {
 
-                } else {
+                $this->$key = $val;
 
-                    $this->$key = $val;
-
-                    if ($this->mailer_engine == 'phpmailer') {
-                        $this->_copy_property_to_phpmailer($key);
-                    }
+                if ($this->mailer_engine == 'phpmailer') {
+                    $this->_copy_property_to_phpmailer($key);
                 }
             }
         }
