@@ -79,6 +79,7 @@ class MY_Email extends CI_Email {
 
             $this->phpmailer = new PHPMailer();
             $this->phpmailer->PluginDir = APPPATH.'third_party/phpmailer/';
+            $this->phpmailer->SMTPDebug = 0;
 
             $this->_copy_property_to_phpmailer('charset');
         }
@@ -616,13 +617,18 @@ class MY_Email extends CI_Email {
 
     // Custom methods ----------------------------------------------------------
 
+    // PHPMailer's SMTP debug info level
+    // 0 = off, 1 = commands, 2 = commands and data
+    public function set_smtp_debug($level) {
 
-    public function set_smtp_debug($enable) {
+        $level = (int) $level;
 
-        $enable = (bool) $enable;
+        if ($level < 0 || $level > 2) {
+            $level = 0;
+        }
 
         if ($this->mailer_engine == 'phpmailer') {
-            $this->phpmailer->SMTPDebug = $enable;
+            $this->phpmailer->SMTPDebug = $level;
         }
 
         return $this;
