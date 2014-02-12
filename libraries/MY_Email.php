@@ -2,12 +2,12 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.1.1
+ * Version: 1.1.2
  * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2014.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
- * Tested on production sites with CodeIgniter 3.0-dev (January 26th, 2014) and
+ * Tested on production sites with CodeIgniter 3.0-dev (February 12th, 2014) and
  * PHPMailer Version 5.2.7 (September 12th, 2013).
  */
 
@@ -449,15 +449,9 @@ class MY_Email extends CI_Email {
         if ($this->mailer_engine == 'phpmailer') {
 
             $this->phpmailer->Body = $body;
-
-            if ($this->mailtype == 'html') {
-                $this->phpmailer->AltBody = $this->_get_alt_message();
-            }
-
-        } else {
-
-            parent::message($body);
         }
+
+        parent::message($body);
 
         return $this;
     }
@@ -582,6 +576,10 @@ class MY_Email extends CI_Email {
         $auto_clear = !empty($auto_clear);
 
         if ($this->mailer_engine == 'phpmailer') {
+
+            if ($this->mailtype == 'html') {
+                $this->phpmailer->AltBody = $this->_get_alt_message();
+            }
 
             $result = (bool) $this->phpmailer->send();
 
