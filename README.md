@@ -1,11 +1,11 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.1.2  
+Version: 1.1.3  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2014.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
-Tested on CodeIgniter 3.0-dev (February 12th, 2014) and with PHPMailer Version 5.2.7 (September 12th, 2013).
+Tested on CodeIgniter 3.0-dev (May 24th, 2014) and with PHPMailer Version 5.2.8 (May 14th, 2014).
 
 Installation
 ------------
@@ -35,7 +35,7 @@ $config['smtp_pass']        = 'yourpassword';
 $config['smtp_port']        = 465;
 $config['smtp_timeout']     = 5;                        // (in seconds)
 $config['smtp_crypto']      = 'ssl';                    // '' or 'tls' or 'ssl'
-$config['smtp_debug']       = 0;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data
+$config['smtp_debug']       = 0;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data, 3 = as 2 plus connection status, 4 = low level data output.
 $config['wordwrap']         = true;
 $config['wrapchars']        = 76;
 $config['mailtype']         = 'html';                   // 'text' or 'html'

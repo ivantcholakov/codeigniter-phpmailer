@@ -9,7 +9,7 @@ $config['smtp_pass']        = '';
 $config['smtp_port']        = 25;
 $config['smtp_timeout']     = 5;                        // (in seconds)
 $config['smtp_crypto']      = '';                       // '' or 'tls' or 'ssl'
-$config['smtp_debug']       = 0;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data
+$config['smtp_debug']       = 0;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data, 3 = as 2 plus connection status, 4 = low level data output.
 $config['wordwrap']         = true;
 $config['wrapchars']        = 76;
 $config['mailtype']         = 'html';                   // 'text' or 'html'

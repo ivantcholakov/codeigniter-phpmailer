@@ -2,13 +2,13 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.1.2
+ * Version: 1.1.3
  * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2014.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
- * Tested on production sites with CodeIgniter 3.0-dev (February 12th, 2014) and
- * PHPMailer Version 5.2.7 (September 12th, 2013).
+ * Tested on production sites with CodeIgniter 3.0-dev (May 24th, 2014) and
+ * PHPMailer Version 5.2.8 (May 14th, 2014).
  */
 
 class MY_Email extends CI_Email {
@@ -96,7 +96,7 @@ class MY_Email extends CI_Email {
             }
         }
 
-        $this->_safe_mode = ( ! is_php('5.4') && (bool) @ini_get('safe_mode'));
+        $this->_safe_mode = ( ! is_php('5.4') && ini_get('safe_mode'));
 
         log_message('debug', 'MY_Email Class Initialized (Engine: '.$this->mailer_engine.')');
     }
@@ -612,12 +612,12 @@ class MY_Email extends CI_Email {
     // Custom methods ----------------------------------------------------------
 
     // PHPMailer's SMTP debug info level
-    // 0 = off, 1 = commands, 2 = commands and data
+    // 0 = off, 1 = commands, 2 = commands and data, 3 = as 2 plus connection status, 4 = low level data output.
     public function set_smtp_debug($level) {
 
         $level = (int) $level;
 
-        if ($level < 0 || $level > 2) {
+        if ($level < 0) {
             $level = 0;
         }
 
