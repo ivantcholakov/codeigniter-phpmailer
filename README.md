@@ -16,7 +16,7 @@ PHPMailer Links
 ---------------
 
 http://phpmailer.worxware.com/  
-https://github.com/Synchro/PHPMailer
+https://github.com/PHPMailer/PHPMailer
 
 Setting It Up (An Example)
 --------------------------
