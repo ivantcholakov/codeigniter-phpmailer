@@ -103,3 +103,8 @@ Note, that most of the SMTP servers require "from" address of the message to be 
 At the end remove this test.
 
 The API of this library is the same as the original Email API. Read the CodeIgniter's manual about Email class.
+
+Readings
+--------
+
+* http://belajarmenulisartikel.com/?p=46 - "Penerapan sceduling windows untuk menjalankan background sendmail pada Codeigniter 2.2.0 (PHP Mailer Gmail)" by Arif Rachman, in Indonesian language.
