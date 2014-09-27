@@ -20,3 +20,4 @@ $config['crlf']             = "\n";                     // "\r\n" or "\n" or "\r
 $config['newline']          = "\n";                     // "\r\n" or "\n" or "\r"
 $config['bcc_batch_mode']   = false;
 $config['bcc_batch_size']   = 200;
+$config['encoding']         = '8bit';                   // The body encoding. For CodeIgniter: '8bit' or '7bit'. For PHPMailer: '8bit', '7bit', 'binary', 'base64', or 'quoted-printable'.

@@ -22,6 +22,8 @@ class MY_Email extends CI_Email {
 
     protected static $protocols = array('mail', 'sendmail', 'smtp');
     protected static $mailtypes = array('html', 'text');
+    protected static $encodings_ci = array('8bit', '7bit');
+    protected static $encodings_phpmailer = array('8bit', '7bit', 'binary', 'base64', 'quoted-printable');
 
     public function __construct($config = array()) {
 
@@ -124,6 +126,7 @@ class MY_Email extends CI_Email {
      * newline
      * bcc_batch_mode
      * bcc_batch_size
+     * encoding
      */
     public function initialize($config = array()) {
 
@@ -611,6 +614,28 @@ class MY_Email extends CI_Email {
 
 
     // Custom methods ----------------------------------------------------------
+
+    // Setting explicitly the body encoding.
+    // See https://github.com/ivantcholakov/codeigniter-phpmailer/issues/3
+    public function set_encoding($encoding) {
+
+        if ($this->mailer_engine == 'phpmailer') {
+
+            if (!in_array($encoding, self::$encodings_phpmailer)) {
+                $encoding = '8bit';
+            }
+
+            $this->phpmailer->Encoding = $encoding;
+
+        } elseif (!in_array($encoding, self::$encodings_ci)) {
+
+            $encoding = '8bit';
+        }
+
+        $this->_encoding = $encoding;
+
+        return $this;
+    }
 
     // PHPMailer's SMTP debug info level
     // 0 = off, 1 = commands, 2 = commands and data, 3 = as 2 plus connection status, 4 = low level data output.
