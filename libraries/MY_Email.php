@@ -13,8 +13,9 @@
 
 class MY_Email extends CI_Email {
 
+    public $phpmailer;  // This property has been made public for testing purposes.
+
     protected $mailer_engine = 'codeigniter';
-    protected $phpmailer;
     protected $CI;
 
     protected $_is_ci_3 = NULL;
