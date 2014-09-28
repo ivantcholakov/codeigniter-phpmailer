@@ -1,11 +1,11 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.1.3  
+Version: 1.1.4  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2014.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
-Tested on CodeIgniter 3.0-dev (May 24th, 2014) and with PHPMailer Version 5.2.8 (May 14th, 2014).
+Tested on CodeIgniter 3.0-dev (September 28th, 2014) and with PHPMailer Version 5.2.9 (September 25th, 2014).
 
 Installation
 ------------
@@ -46,6 +46,7 @@ $config['crlf']             = "\n";                     // "\r\n" or "\n" or "\r
 $config['newline']          = "\n";                     // "\r\n" or "\n" or "\r"
 $config['bcc_batch_mode']   = false;
 $config['bcc_batch_size']   = 200;
+$config['encoding']         = '8bit';                   // The body encoding. For CodeIgniter: '8bit' or '7bit'. For PHPMailer: '8bit', '7bit', 'binary', 'base64', or 'quoted-printable'.
 ```
 
 Notes:
