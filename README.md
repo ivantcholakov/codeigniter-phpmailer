@@ -21,7 +21,7 @@ https://github.com/PHPMailer/PHPMailer
 Setting It Up (An Example)
 --------------------------
 
-1. Edit the file `application/config/email.php` which contains the default settings for the email engine. For a Gmail account, the setting might be something like this:
+* Edit the file `application/config/email.php` which contains the default settings for the email engine. For a Gmail account, the setting might be something like this:
 
 ```php
 <?php defined('BASEPATH') OR exit('No direct script access allowed.');
@@ -50,10 +50,10 @@ $config['encoding']         = '8bit';                   // The body encoding. Fo
 ```
 
 Notes:
-- PHP openssl module should be enabled if encrypted SMTP access is required;
-- Set $config['useragent'] as 'PHPMailer' if the original 'CodeIgniter' engine fails for some reason.
+    - PHP openssl module should be enabled if encrypted SMTP access is required;
+    - Set $config['useragent'] as 'PHPMailer' if the original 'CodeIgniter' engine fails for some reason.
 
-2. Within a controller paste the following code for testing purposes:
+* Within a controller paste the following code for testing purposes:
 
 ```php
             $this->load->library('email');
