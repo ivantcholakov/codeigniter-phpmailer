@@ -50,8 +50,8 @@ $config['encoding']         = '8bit';                   // The body encoding. Fo
 ```
 
 Notes:
-    - PHP openssl module should be enabled if encrypted SMTP access is required;
-    - Set $config['useragent'] as 'PHPMailer' if the original 'CodeIgniter' engine fails for some reason.
+* PHP openssl module should be enabled if encrypted SMTP access is required;
+* Set $config['useragent'] as 'PHPMailer' if the original 'CodeIgniter' engine fails for some reason.
 
 * Within a controller paste the following code for testing purposes:
 
