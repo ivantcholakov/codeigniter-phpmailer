@@ -225,7 +225,7 @@ class MY_Email extends CI_Email {
         $this->smtp_crypto = $smtp_crypto;
 
         if ($this->mailer_engine == 'phpmailer') {
-            $this->phpmailer->set('SMTPSecure', $smtp_crypto);
+            $this->phpmailer->SMTPSecure = $smtp_crypto;
         }
 
         return $this;
@@ -238,7 +238,7 @@ class MY_Email extends CI_Email {
         if (!$this->wordwrap) {
 
             if ($this->mailer_engine == 'phpmailer') {
-                $this->phpmailer->set('WordWrap', 0);
+                $this->phpmailer->WordWrap = 0;
             }
         }
 
@@ -263,7 +263,7 @@ class MY_Email extends CI_Email {
         $this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : 3;
 
         if ($this->mailer_engine == 'phpmailer') {
-            $this->phpmailer->set('Priority', $this->priority);
+            $this->phpmailer->Priority = $this->priority;
         }
 
         return $this;
@@ -301,7 +301,7 @@ class MY_Email extends CI_Email {
                 $return_path = $from;
             }
 
-            $this->phpmailer->set('Sender', $return_path);
+            $this->phpmailer->Sender = $return_path;
 
         } else {
 
@@ -804,9 +804,8 @@ class MY_Email extends CI_Email {
         }
 
         if ($key == 'wrapchars') {
-
             if (!$this->wordwrap) {
-                $this->phpmailer->set('WordWrap', 0);
+                $this->phpmailer->WordWrap = 0;
             }
         }
     }
