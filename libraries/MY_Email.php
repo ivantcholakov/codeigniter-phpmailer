@@ -101,7 +101,7 @@ class MY_Email extends CI_Email {
 
         $this->_safe_mode = ( ! is_php('5.4') && ini_get('safe_mode'));
 
-        log_message('debug', 'MY_Email Class Initialized (Engine: '.$this->mailer_engine.')');
+        log_message('info', 'MY_Email Class Initialized (Engine: '.$this->mailer_engine.')');
     }
 
     /**
@@ -668,19 +668,19 @@ class MY_Email extends CI_Email {
 
         /* See http://htmlemailboilerplate.com/ */
 
-        /* Based on The MailChimp Reset INLINE: Yes. */  
+        /* Based on The MailChimp Reset INLINE: Yes. */
         /* Client-specific Styles */
         #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
         body {
             width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:40px;
             font-family: Arial, Verdana, Helvetica, sans-serif; font-size: 16px;
-        } 
+        }
         /* End reset */
 
         /* Some sensible defaults for images
         Bring inline: Yes. */
-        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;} 
-        a img {border:none;} 
+        img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+        a img {border:none;}
 
         /* Yahoo paragraph fix
         Bring inline: Yes. */
@@ -804,6 +804,7 @@ class MY_Email extends CI_Email {
         }
 
         if ($key == 'wrapchars') {
+
             if (!$this->wordwrap) {
                 $this->phpmailer->WordWrap = 0;
             }
