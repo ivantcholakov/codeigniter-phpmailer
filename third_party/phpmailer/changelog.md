@@ -1,5 +1,21 @@
 # ChangeLog
 
+* Use `application/javascript` for .js attachments
+* Improve RFC2821 compliance for timelimits, especially for end-of-data
+* Add Azerbaijani translations (Thanks to @mirjalal)
+* Minor code cleanup for robustness
+* Add Indonesian translations (Thanks to @ceceprawiro)
+* Avoid `error_log` Debugoutput naming clash
+* Add ability to parse server capabilities in response to EHLO (useful for SendGrid etc)
+* Amended default values for WordWrap to match RFC
+* Remove html2text converter class, provide new mechanism for injecting converters
+* Improve pointers to docs and support in README
+* Add example file upload script
+* Refactor and major cleanup of EasyPeasyICS, now a lot more usable
+* Make set() method simpler and more reliable
+* Add Malay translation (Thanks to @nawawi)
+* Add Bulgarian translation (Thanks to @mialy)
+
 ## Version 5.2.9 (Sept 25th 2014)
 * **Important: The autoloader is no longer autoloaded by the PHPMailer class**
 * Update html2text from https://github.com/mtibben/html2text
@@ -64,7 +80,7 @@
 * Better default behaviour for validateAddress
 
 ## Version 5.2.7 (September 12th 2013)
-* Add Ukranian translation from @Krezalis
+* Add Ukrainian translation from @Krezalis
 * Support for do_verp
 * Fix bug in CRAM-MD5 AUTH
 * Propagate Debugoutput option to SMTP class (@Reblutus)
@@ -502,7 +518,7 @@ NOTE: will NOT work with PHP5 in E_STRICT error mode
 ## Version 1.15 (Fri, Jun 15 2001)
 Note: these changes contributed by Patrice Fournier
 * Changed all remaining \n to \r\n
-* Bcc: header no longer writen to message except
+* Bcc: header no longer written to message except
   when sent directly to sendmail
 * Added a small message to non-MIME compliant mail reader
 * Added Sender variable to change the Sender email
