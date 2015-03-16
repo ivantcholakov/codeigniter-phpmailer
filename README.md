@@ -62,7 +62,7 @@ Set $config['useragent'] as 'PHPMailer' if the original 'CodeIgniter' engine fai
             $this->load->library('email');
 
             $subject = 'This is a test';
-            $message = '<p>This message has been sent for tesing purposes.</p>';
+            $message = '<p>This message has been sent for testing purposes.</p>';
 
             // Get full html:
             $body =
