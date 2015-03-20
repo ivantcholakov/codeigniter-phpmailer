@@ -1041,7 +1041,6 @@ class PHPMailer
                     str_replace("\r\n", "\n", $header_dkim) . self::CRLF;
             }
             return true;
-
         } catch (phpmailerException $exc) {
             $this->setError($exc->getMessage());
             if ($this->exceptions) {
@@ -1221,7 +1220,6 @@ class PHPMailer
     protected function smtpSend($header, $body)
     {
         $bad_rcpt = array();
-
         if (!$this->smtpConnect()) {
             throw new phpmailerException($this->lang('smtp_connect_failed'), self::STOP_CRITICAL);
         }
@@ -1323,13 +1321,23 @@ class PHPMailer
             // The host string prefix can temporarily override the current setting for SMTPSecure
             // If it's not specified, the default value is used
             $prefix = '';
+            $secure = $this->SMTPSecure;
             $tls = ($this->SMTPSecure == 'tls');
-            if ($hostinfo[2] == 'ssl' or ($hostinfo[2] == '' and $this->SMTPSecure == 'ssl')) {
+            if ('ssl' == $hostinfo[2] or ('' == $hostinfo[2] and 'ssl' == $this->SMTPSecure)) {
                 $prefix = 'ssl://';
-                $tls = false; // Can't have SSL and TLS at once
+                $tls = false; // Can't have SSL and TLS at the same time
+                $secure = 'ssl';
             } elseif ($hostinfo[2] == 'tls') {
                 $tls = true;
                 // tls doesn't use a prefix
+                $secure = 'tls';
+            }
+            //Do we need the OpenSSL extension?
+            if ('tls' === $secure or 'ssl' === $secure) {
+                //Check for an OpenSSL constant rather than using extension_loaded, which is sometimes disabled
+                if (!defined('OPENSSL_ALGO_SHA1')) {
+                    throw new phpmailerException($this->lang('extension_missing').'openssl', self::STOP_CRITICAL);
+                }
             }
             $host = $hostinfo[3];
             $port = $this->Port;
@@ -1426,7 +1434,8 @@ class PHPMailer
             'signing' => 'Signing Error: ',
             'smtp_connect_failed' => 'SMTP connect() failed.',
             'smtp_error' => 'SMTP server error: ',
-            'variable_set' => 'Cannot set or reset variable: '
+            'variable_set' => 'Cannot set or reset variable: ',
+            'extension_missing' => 'Extension missing: '
         );
         if (empty($lang_path)) {
             // Calculate an absolute path so it can work if CWD is not here
@@ -1434,13 +1443,14 @@ class PHPMailer
         }
         $foundlang = true;
         $lang_file = $lang_path . 'phpmailer.lang-' . $langcode . '.php';
-        if ($langcode != 'en') { // There is no English translation file
+        // There is no English translation file
+        if ($langcode != 'en') {
             // Make sure language file path is readable
             if (!is_readable($lang_file)) {
                 $foundlang = false;
             } else {
                 // Overwrite language-specific strings.
-                // This way we'll never have missing translations.
+                // This way we'll never have missing translation keys.
                 $foundlang = include $lang_file;
             }
         }
@@ -1736,7 +1746,7 @@ class PHPMailer
         } else {
             $this->lastMessageID = sprintf('<%s@%s>', $uniq_id, $this->ServerHostname());
         }
-        $result .= $this->HeaderLine('Message-ID', $this->lastMessageID);
+        $result .= $this->headerLine('Message-ID', $this->lastMessageID);
         $result .= $this->headerLine('X-Priority', $this->Priority);
         if ($this->XMailer == '') {
             $result .= $this->headerLine(
@@ -1863,20 +1873,25 @@ class PHPMailer
             $altBodyEncoding = '7bit';
             $altBodyCharSet = 'us-ascii';
         }
+        //Use this as a preamble in all multipart message types
+        $mimepre = "This is a multi-part message in MIME format." . $this->LE . $this->LE;
         switch ($this->message_type) {
             case 'inline':
+                $body .= $mimepre;
                 $body .= $this->getBoundary($this->boundary[1], $bodyCharSet, '', $bodyEncoding);
                 $body .= $this->encodeString($this->Body, $bodyEncoding);
                 $body .= $this->LE . $this->LE;
                 $body .= $this->attachAll('inline', $this->boundary[1]);
                 break;
             case 'attach':
+                $body .= $mimepre;
                 $body .= $this->getBoundary($this->boundary[1], $bodyCharSet, '', $bodyEncoding);
                 $body .= $this->encodeString($this->Body, $bodyEncoding);
                 $body .= $this->LE . $this->LE;
                 $body .= $this->attachAll('attachment', $this->boundary[1]);
                 break;
             case 'inline_attach':
+                $body .= $mimepre;
                 $body .= $this->textLine('--' . $this->boundary[1]);
                 $body .= $this->headerLine('Content-Type', 'multipart/related;');
                 $body .= $this->textLine("\tboundary=\"" . $this->boundary[2] . '"');
@@ -1889,6 +1904,7 @@ class PHPMailer
                 $body .= $this->attachAll('attachment', $this->boundary[1]);
                 break;
             case 'alt':
+                $body .= $mimepre;
                 $body .= $this->getBoundary($this->boundary[1], $altBodyCharSet, 'text/plain', $altBodyEncoding);
                 $body .= $this->encodeString($this->AltBody, $altBodyEncoding);
                 $body .= $this->LE . $this->LE;
@@ -1903,6 +1919,7 @@ class PHPMailer
                 $body .= $this->endBoundary($this->boundary[1]);
                 break;
             case 'alt_inline':
+                $body .= $mimepre;
                 $body .= $this->getBoundary($this->boundary[1], $altBodyCharSet, 'text/plain', $altBodyEncoding);
                 $body .= $this->encodeString($this->AltBody, $altBodyEncoding);
                 $body .= $this->LE . $this->LE;
@@ -1918,6 +1935,7 @@ class PHPMailer
                 $body .= $this->endBoundary($this->boundary[1]);
                 break;
             case 'alt_attach':
+                $body .= $mimepre;
                 $body .= $this->textLine('--' . $this->boundary[1]);
                 $body .= $this->headerLine('Content-Type', 'multipart/alternative;');
                 $body .= $this->textLine("\tboundary=\"" . $this->boundary[2] . '"');
@@ -1933,6 +1951,7 @@ class PHPMailer
                 $body .= $this->attachAll('attachment', $this->boundary[1]);
                 break;
             case 'alt_inline_attach':
+                $body .= $mimepre;
                 $body .= $this->textLine('--' . $this->boundary[1]);
                 $body .= $this->headerLine('Content-Type', 'multipart/alternative;');
                 $body .= $this->textLine("\tboundary=\"" . $this->boundary[2] . '"');
@@ -1964,7 +1983,7 @@ class PHPMailer
         } elseif ($this->sign_key_file) {
             try {
                 if (!defined('PKCS7_TEXT')) {
-                    throw new phpmailerException($this->lang('signing') . ' OpenSSL extension missing.');
+                    throw new phpmailerException($this->lang('extension_missing') . 'openssl');
                 }
                 // @TODO would be nice to use php://temp streams here, but need to wrap for PHP < 5.1
                 $file = tempnam(sys_get_temp_dir(), 'mail');
@@ -1996,6 +2015,10 @@ class PHPMailer
                     @unlink($file);
                     $body = file_get_contents($signed);
                     @unlink($signed);
+                    //The message returned by openssl contains both headers and body, so need to split them up
+                    $parts = explode("\n\n", $body, 2);
+                    $this->MIMEHeader .= $parts[0] . $this->LE . $this->LE;
+                    $body = $parts[1];
                 } else {
                     @unlink($file);
                     @unlink($signed);
@@ -2493,7 +2516,8 @@ class PHPMailer
      */
     public function encodeQP($string, $line_max = 76)
     {
-        if (function_exists('quoted_printable_encode')) { // Use native function if it's available (>= PHP5.3)
+        // Use native function if it's available (>= PHP5.3)
+        if (function_exists('quoted_printable_encode')) {
             return $this->fixEOL(quoted_printable_encode($string));
         }
         // Fall back to a pure PHP implementation
@@ -2883,10 +2907,11 @@ class PHPMailer
             $this->setLanguage('en'); // set the default language
         }
 
-        if (isset($this->language[$key])) {
+        if (array_key_exists($key, $this->language)) {
             return $this->language[$key];
         } else {
-            return 'Language string failed to load: ' . $key;
+            //Return the key as a fallback
+            return $key;
         }
     }
 
@@ -3313,7 +3338,7 @@ class PHPMailer
     {
         if (!defined('PKCS7_TEXT')) {
             if ($this->exceptions) {
-                throw new phpmailerException($this->lang('signing') . ' OpenSSL extension missing.');
+                throw new phpmailerException($this->lang('extension_missing') . 'openssl');
             }
             return '';
         }
