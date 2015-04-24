@@ -1,5 +1,6 @@
 # ChangeLog
 
+* Add custom header getter
 * Use `application/javascript` for .js attachments
 * Improve RFC2821 compliance for timelimits, especially for end-of-data
 * Add Azerbaijani translations (Thanks to @mirjalal)
@@ -26,6 +27,7 @@
 * Add MIME multipart preamble for better Outlook compatibility
 * Provide detailed errors when individual recipients fail
 * Report more errors when connecting
+* Add extras classes to composer classmap
 
 ## Version 5.2.9 (Sept 25th 2014)
 * **Important: The autoloader is no longer autoloaded by the PHPMailer class**
