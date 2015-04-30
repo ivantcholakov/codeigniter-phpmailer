@@ -240,11 +240,19 @@ class PHPMailer
     public $Helo = '';
 
     /**
-     * The secure connection prefix.
-     * Options: "", "ssl" or "tls"
+     * What kind of encryption to use on the SMTP connection.
+     * Options: '', 'ssl' or 'tls'
      * @type string
      */
     public $SMTPSecure = '';
+
+    /**
+     * Whether to enable TLS encryption automatically if a server supports it,
+     * even if `SMTPSecure` is not set to 'tls'.
+     * Be aware that in PHP >= 5.6 this requires that the server's certificates are valid.
+     * @type boolean
+     */
+    public $SMTPAutoTLS = true;
 
     /**
      * Whether to use SMTP authentication.
@@ -565,6 +573,13 @@ class PHPMailer
     protected $exceptions = false;
 
     /**
+     * Unique ID used for message ID and boundaries.
+     * @type string
+     * @access protected
+     */
+    protected $uniqueid = '';
+
+    /**
      * Error severity: message only, continue processing.
      */
     const STOP_MESSAGE = 0;
@@ -583,6 +598,12 @@ class PHPMailer
      * SMTP RFC standard line ending.
      */
     const CRLF = "\r\n";
+
+    /**
+     * The maximum line length allowed by RFC 2822 section 2.1.1
+     * @type integer
+     */
+    const MAX_LINE_LENGTH = 998;
 
     /**
      * Constructor.
@@ -1009,15 +1030,20 @@ class PHPMailer
                 $this->ContentType = 'multipart/alternative';
             }
 
-            $this->error_count = 0; // reset errors
+            $this->error_count = 0; // Reset errors
             $this->setMessageType();
             // Refuse to send an empty message unless we are specifically allowing it
             if (!$this->AllowEmpty and empty($this->Body)) {
                 throw new phpmailerException($this->lang('empty_message'), self::STOP_CRITICAL);
             }
 
-            $this->MIMEHeader = $this->createHeader();
+            // Create body before headers in case body makes changes to headers (e.g. altering transfer encoding)
+            $this->MIMEHeader = '';
             $this->MIMEBody = $this->createBody();
+            // createBody may have added some headers, so retain them
+            $tempheaders = $this->MIMEHeader;
+            $this->MIMEHeader = $this->createHeader();
+            $this->MIMEHeader .= $tempheaders;
 
             // To capture the complete message when using mail(), create
             // an extra header list which createHeader() doesn't fold in
@@ -1328,9 +1354,10 @@ class PHPMailer
                 $secure = 'tls';
             }
             //Do we need the OpenSSL extension?
+            $sslext = defined('OPENSSL_ALGO_SHA1');
             if ('tls' === $secure or 'ssl' === $secure) {
                 //Check for an OpenSSL constant rather than using extension_loaded, which is sometimes disabled
-                if (!defined('OPENSSL_ALGO_SHA1')) {
+                if (!$sslext) {
                     throw new phpmailerException($this->lang('extension_missing').'openssl', self::STOP_CRITICAL);
                 }
             }
@@ -1348,7 +1375,14 @@ class PHPMailer
                         $hello = $this->serverHostname();
                     }
                     $this->smtp->hello($hello);
-
+                    //Automatically enable TLS encryption if:
+                    // * it's not disabled
+                    // * we have openssl extension
+                    // * we are not already using SSL
+                    // * the server offers STARTTLS
+                    if ($this->SMTPAutoTLS and $sslext and $secure != 'ssl' and $this->smtp->getServerExt('STARTTLS')) {
+                        $tls = true;
+                    }
                     if ($tls) {
                         if (!$this->smtp->startTLS()) {
                             throw new phpmailerException($this->lang('connect_host'));
@@ -1683,12 +1717,6 @@ class PHPMailer
     {
         $result = '';
 
-        // Set the boundaries
-        $uniq_id = md5(uniqid(time()));
-        $this->boundary[1] = 'b1_' . $uniq_id;
-        $this->boundary[2] = 'b2_' . $uniq_id;
-        $this->boundary[3] = 'b3_' . $uniq_id;
-
         if ($this->MessageDate == '') {
             $this->MessageDate = self::rfcDate();
         }
@@ -1740,7 +1768,7 @@ class PHPMailer
         if ($this->MessageID != '') {
             $this->lastMessageID = $this->MessageID;
         } else {
-            $this->lastMessageID = sprintf('<%s@%s>', $uniq_id, $this->ServerHostname());
+            $this->lastMessageID = sprintf('<%s@%s>', $this->uniqueid, $this->ServerHostname());
         }
         $result .= $this->headerLine('Message-ID', $this->lastMessageID);
         $result .= $this->headerLine('X-Priority', $this->Priority);
@@ -1850,6 +1878,11 @@ class PHPMailer
     public function createBody()
     {
         $body = '';
+        //Create unique IDs and preset boundaries
+        $this->uniqueid = md5(uniqid(time()));
+        $this->boundary[1] = 'b1_' . $this->uniqueid;
+        $this->boundary[2] = 'b2_' . $this->uniqueid;
+        $this->boundary[3] = 'b3_' . $this->uniqueid;
 
         if ($this->sign_key_file) {
             $body .= $this->getMailMIME() . $this->LE;
@@ -1859,15 +1892,27 @@ class PHPMailer
 
         $bodyEncoding = $this->Encoding;
         $bodyCharSet = $this->CharSet;
+        //Can we do a 7-bit downgrade?
         if ($bodyEncoding == '8bit' and !$this->has8bitChars($this->Body)) {
             $bodyEncoding = '7bit';
             $bodyCharSet = 'us-ascii';
         }
+        //If lines are too long, change to quoted-printable transfer encoding
+        if (self::hasLineLongerThanMax($this->Body)) {
+            $this->Encoding = 'quoted-printable';
+            $bodyEncoding = 'quoted-printable';
+        }
+
         $altBodyEncoding = $this->Encoding;
         $altBodyCharSet = $this->CharSet;
+        //Can we do a 7-bit downgrade?
         if ($altBodyEncoding == '8bit' and !$this->has8bitChars($this->AltBody)) {
             $altBodyEncoding = '7bit';
             $altBodyCharSet = 'us-ascii';
+        }
+        //If lines are too long, change to quoted-printable transfer encoding
+        if (self::hasLineLongerThanMax($this->AltBody)) {
+            $altBodyEncoding = 'quoted-printable';
         }
         //Use this as a preamble in all multipart message types
         $mimepre = "This is a multi-part message in MIME format." . $this->LE . $this->LE;
@@ -3469,6 +3514,18 @@ class PHPMailer
         );
         $signed = $this->DKIM_Sign($toSign);
         return $dkimhdrs . $signed . "\r\n";
+    }
+
+    /**
+     * Detect if a string contains a line longer than the maximum line length allowed.
+     * @param string $str
+     * @return boolean
+     * @static
+     */
+    public static function hasLineLongerThanMax($str)
+    {
+        //+2 to include CRLF line break for a 1000 total
+        return (boolean)preg_match('/^(.{'.(self::MAX_LINE_LENGTH + 2).',})/m', $str);
     }
 
     /**

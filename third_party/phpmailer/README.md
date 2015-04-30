@@ -6,7 +6,7 @@ Build status: [![Build Status](https://travis-ci.org/PHPMailer/PHPMailer.svg)](h
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/PHPMailer/PHPMailer/badges/quality-score.png?s=3758e21d279becdf847a557a56a3ed16dfec9d5d)](https://scrutinizer-ci.com/g/PHPMailer/PHPMailer/)
 [![Code Coverage](https://scrutinizer-ci.com/g/PHPMailer/PHPMailer/badges/coverage.png?s=3fe6ca5fe8cd2cdf96285756e42932f7ca256962)](https://scrutinizer-ci.com/g/PHPMailer/PHPMailer/)
 
-[![Latest Stable Version](https://poser.pugx.org/phpmailer/phpmailer/v/stable.svg)](https://packagist.org/packages/phpmailer/phpmailer) [![Total Downloads](https://poser.pugx.org/phpmailer/phpmailer/downloads.svg)](https://packagist.org/packages/phpmailer/phpmailer) [![Latest Unstable Version](https://poser.pugx.org/phpmailer/phpmailer/v/unstable.svg)](https://packagist.org/packages/phpmailer/phpmailer) [![License](https://poser.pugx.org/phpmailer/phpmailer/license.svg)](https://packagist.org/packages/phpmailer/phpmailer)
+[![Latest Stable Version](https://poser.pugx.org/phpmailer/phpmailer/v/stable.svg)](https://packagist.org/packages/phpmailer/phpmailer) [![Total Downloads](https://poser.pugx.org/phpmailer/phpmailer/downloads)](https://packagist.org/packages/phpmailer/phpmailer) [![Latest Unstable Version](https://poser.pugx.org/phpmailer/phpmailer/v/unstable.svg)](https://packagist.org/packages/phpmailer/phpmailer) [![License](https://poser.pugx.org/phpmailer/phpmailer/license.svg)](https://packagist.org/packages/phpmailer/phpmailer)
 
 ## Class Features
 
@@ -17,7 +17,7 @@ Build status: [![Build Status](https://travis-ci.org/PHPMailer/PHPMailer.svg)](h
 - Multipart/alternative emails for mail clients that do not read HTML email
 - Support for UTF-8 content and 8bit, base64, binary, and quoted-printable encodings
 - SMTP authentication with LOGIN, PLAIN, NTLM and CRAM-MD5 mechanisms over SSL and TLS transports
-- Error messages in 46 languages!
+- Error messages in 47 languages!
 - DKIM and S/MIME signing support
 - Compatible with PHP 5.0 and later
 - Much more!
@@ -95,7 +95,7 @@ You'll find plenty more to play with in the [examples](examples/) folder.
 That's it. You should now be ready to use PHPMailer!
 
 ## Localization
-PHPMailer defaults to English, but in the [language](language/) folder you'll find numerous (45 at the time of writing!) translations for PHPMailer error messages that you may encounter. Their filenames contain [ISO 639-1](http://en.wikipedia.org/wiki/ISO_639-1) language code for the translations, for example `fr` for French. To specify a language, you need to tell PHPMailer which one to use, like this:
+PHPMailer defaults to English, but in the [language](language/) folder you'll find numerous (46 at the time of writing!) translations for PHPMailer error messages that you may encounter. Their filenames contain [ISO 639-1](http://en.wikipedia.org/wiki/ISO_639-1) language code for the translations, for example `fr` for French. To specify a language, you need to tell PHPMailer which one to use, like this:
 
 ```php
 // To load the French version
@@ -140,7 +140,7 @@ Please *don't* use the SourceForge or Google Code projects any more.
 
 Development time and resources for PHPMailer are provided by [Smartmessages.net](https://info.smartmessages.net/), a powerful email marketing system.
 
-<a href="https://info.smartmessages.net/"><img src="http://www.smartmessages.net/images/smartmessages-logo.svg" width="250" height="28" alt="Smartmessages email marketing"></a>
+<a href="https://info.smartmessages.net/"><img src="https://www.smartmessages.net/img/smartmessages-logo.svg" width="250" height="28" alt="Smartmessages email marketing"></a>
 
 Other contributions are gladly received, whether in beer 🍺, T-shirts 👕, Amazon wishlist raids, or cold, hard cash 💰.
 
