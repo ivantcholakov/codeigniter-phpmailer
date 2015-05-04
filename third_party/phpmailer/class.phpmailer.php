@@ -31,7 +31,7 @@ class PHPMailer
      * The PHPMailer Version number.
      * @type string
      */
-    public $Version = '5.2.9';
+    public $Version = '5.2.10';
 
     /**
      * Email priority.
@@ -2949,6 +2949,12 @@ class PHPMailer
         }
 
         if (array_key_exists($key, $this->language)) {
+            if ($key == 'smtp_connect_failed') {
+                //Include a link to troubleshooting docs on SMTP connection failure
+                //this is by far the biggest cause of support questions
+                //but it's usually not PHPMailer's fault.
+                return $this->language[$key] . ' https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting';
+            }
             return $this->language[$key];
         } else {
             //Return the key as a fallback

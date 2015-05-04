@@ -1,6 +1,6 @@
 # ChangeLog
 
-## Version 5.2.10 (April 29th 2015)
+## Version 5.2.10 (May 4th 2015)
 * Add custom header getter
 * Use `application/javascript` for .js attachments
 * Improve RFC2821 compliance for timelimits, especially for end-of-data
@@ -33,6 +33,7 @@
 * Expose stream_context_create options via new SMTPOptions property
 * Automatic encoding switch to quoted-printable if message lines are too long
 * Add Korean translation (Thanks to @ChalkPE)
+* Provide a pointer to troubleshooting docs on SMTP connection failure
 
 ## Version 5.2.9 (Sept 25th 2014)
 * **Important: The autoloader is no longer autoloaded by the PHPMailer class**
