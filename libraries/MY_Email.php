@@ -2,15 +2,15 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.1.7
+ * Version: 1.1.8
  * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2015.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
  * This library is intended to be compatible with CI 2.x and CI 3.x.
  *
- * Tested on production sites with CodeIgniter 3.0.0+ (May 4, 2015) and
- * PHPMailer Version 5.2.10+ (May 5, 2015).
+ * Tested on production sites with CodeIgniter 3.0.0+ (May 31, 2015) and
+ * PHPMailer Version 5.2.10+ (May 31, 2015).
  */
 
 class MY_Email extends CI_Email {
@@ -475,10 +475,16 @@ class MY_Email extends CI_Email {
             $disposition ='attachment';
         }
 
-        if ($this->mailer_engine == 'phpmailer') {
+        $newname = (string) $newname;
 
-            $newname = (string) $newname;
-            $mime = (string) $mime;
+        if ($newname == '') {
+            // For making strict NULL checks happy.
+            $newname = NULL;
+        }
+
+        $mime = (string) $mime;
+
+        if ($this->mailer_engine == 'phpmailer') {
 
             if ($mime == '') {
 
@@ -504,29 +510,33 @@ class MY_Email extends CI_Email {
                 $mime = $this->_mime_types(pathinfo($file, PATHINFO_EXTENSION));
                 fclose($fp);
 
-                $newname = basename($file);
+                $this->_attachments[] = array(
+                    'name' => array($file, $newname),
+                    'disposition' => $disposition,
+                    'type' => $mime,
+                );
+
+                $newname = $newname === NULL ? basename($file) : $newname;
+                $cid = $this->attachment_cid($file);
 
             } else {
 
-                $file_content =& $file; // Buffered file.
-                // Added by Ivan Tcholakov, 14-JAN-2014.
-                $file = $newname;
-                //
+                // A buffered file, in this case make sure that $newname has been set.
+
+                $file_content =& $file;
+
+                $this->_attachments[] = array(
+                    'name' => array($newname, $newname),
+                    'disposition' => $disposition,
+                    'type' => $mime,
+                );
+
+                $cid = $this->attachment_cid($newname);
             }
 
-            $this->_attachments[] = array(
-                'name' => array($file, $newname),
-                'disposition' => $disposition,
-                'type' => $mime,
-            );
-
             if (empty($embedded_image)) {
-
                 $this->phpmailer->addStringAttachment($file_content, $newname, 'base64', $mime, $disposition);
-
             } else {
-
-                $cid = $this->attachment_cid($file);
                 $this->phpmailer->addStringEmbeddedImage($file_content, $cid, $newname, 'base64', $mime, $disposition);
             }
 
