@@ -1,13 +1,13 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.1.9  
+Version: 1.1.10  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2015.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
 This library is intended to be compatible with CI 2.x and CI 3.x.
 
-Tested on CodeIgniter 3.0.0+ (June 14, 2015) and with PHPMailer Version 5.2.10+ (June 14, 2015).
+Tested on CodeIgniter 3.0.0+ (July 12, 2015) and with PHPMailer Version 5.2.10+ (July 12, 2015).
 
 Installation
 ------------
@@ -43,7 +43,7 @@ $config['wrapchars']        = 76;
 $config['mailtype']         = 'html';                   // 'text' or 'html'
 $config['charset']          = 'utf-8';
 $config['validate']         = true;
-$config['priority']         = 3;                        // 1, 2, 3, 4, 5
+$config['priority']         = 3;                        // 1, 2, 3, 4, 5; on PHPMailer useragent NULL is a possible option, it means that X-priority header is not set at all, see https://github.com/PHPMailer/PHPMailer/issues/449
 $config['crlf']             = "\n";                     // "\r\n" or "\n" or "\r"
 $config['newline']          = "\n";                     // "\r\n" or "\n" or "\r"
 $config['bcc_batch_mode']   = false;

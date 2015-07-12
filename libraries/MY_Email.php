@@ -2,15 +2,15 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.1.9
+ * Version: 1.1.10
  * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2015.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
  * This library is intended to be compatible with CI 2.x and CI 3.x.
  *
- * Tested on production sites with CodeIgniter 3.0.0+ (June 14, 2015) and
- * PHPMailer Version 5.2.10+ (June 14, 2015).
+ * Tested on production sites with CodeIgniter 3.0.0+ (July 12, 2015) and
+ * PHPMailer Version 5.2.10+ (July 12, 2015).
  */
 
 class MY_Email extends CI_Email {
@@ -262,10 +262,14 @@ class MY_Email extends CI_Email {
 
     public function set_priority($n = 3) {
 
-        $this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : 3;
-
         if ($this->mailer_engine == 'phpmailer') {
+
+            $this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : null;
             $this->phpmailer->Priority = $this->priority;
+
+        } else {
+
+            $this->priority = preg_match('/^[1-5]$/', $n) ? (int) $n : 3;
         }
 
         return $this;
