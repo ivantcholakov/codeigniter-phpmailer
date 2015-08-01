@@ -458,9 +458,9 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
             $this->phpmailer->addCustomHeader($header, str_replace(array("\n", "\r"), '', $value));
-        } else {
-            parent::set_header($header, $value);
         }
+
+        parent::set_header($header, $value);
 
         return $this;
     }
