@@ -461,6 +461,8 @@ class MY_Email extends CI_Email {
         } else {
             parent::set_header($header, $value);
         }
+
+        return $this;
     }
 
     public function send($auto_clear = true) {
