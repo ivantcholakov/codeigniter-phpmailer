@@ -302,7 +302,7 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
 
-           $this->phpmailer->Subject = (string) $subject;
+           $this->phpmailer->Subject = $subject;
 
         } else {
 
