@@ -302,7 +302,12 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
 
-           $this->phpmailer->Subject = $subject;
+            // Modified by Ivan Tcholakov, 01-AUG-2015.
+            // See https://github.com/ivantcholakov/codeigniter-phpmailer/issues/8
+            // This change probably is not needed, done anyway.
+            //$this->phpmailer->Subject = $subject;
+            $this->phpmailer->Subject = str_replace(array('{unwrap}', '{/unwrap}'), '', $subject);
+            //
 
         } else {
 
@@ -318,7 +323,11 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
 
-            $this->phpmailer->Body = $body;
+            // Modified by Ivan Tcholakov, 01-AUG-2015.
+            // See https://github.com/ivantcholakov/codeigniter-phpmailer/issues/8
+            //$this->phpmailer->Body = $body;
+            $this->phpmailer->Body = str_replace(array('{unwrap}', '{/unwrap}'), '', $body);
+            //
         }
 
         parent::message($body);
@@ -472,7 +481,12 @@ class MY_Email extends CI_Email {
         if ($this->mailer_engine == 'phpmailer') {
 
             if ($this->mailtype == 'html') {
-                $this->phpmailer->AltBody = $this->_get_alt_message();
+
+                // Modified by Ivan Tcholakov, 01-AUG-2015.
+                // See https://github.com/ivantcholakov/codeigniter-phpmailer/issues/8
+                //$this->phpmailer->AltBody = $this->_get_alt_message();
+                $this->phpmailer->AltBody = str_replace(array('{unwrap}', '{/unwrap}'), '', $this->_get_alt_message());
+                //
             }
 
             $result = (bool) $this->phpmailer->send();
