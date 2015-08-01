@@ -842,18 +842,20 @@ class MY_Email extends CI_Email {
 
     protected function _get_alt_message() {
 
-        if (!empty($this->alt_message)) {
+        $alt_message = (string) $this->alt_message;
 
-            return ($this->wordwrap)
-                ? $this->word_wrap($this->alt_message, 76)
-                : $this->alt_message;
+        if ($alt_message == '') {
+            $alt_message = $this->_plain_text($this->_body);
         }
 
-        $body = $this->_plain_text($this->_body);
+        if ($this->mailer_engine == 'phpmailer') {
+            // PHPMailer would do the word wrapping.
+            return $alt_message;
+        }
 
         return ($this->wordwrap)
-            ? $this->word_wrap($body, 76)
-            : $body;
+            ? $this->word_wrap($alt_message, 76)
+            : $alt_message;
     }
 
     protected function _plain_text($html) {
