@@ -451,6 +451,18 @@ class MY_Email extends CI_Email {
     }
     //
 
+    public function set_header($header, $value) {
+
+        $header = (string) $header;
+        $value = (string) $value;
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->addCustomHeader($header, str_replace(array("\n", "\r"), '', $value));
+        } else {
+            parent::set_header($header, $value);
+        }
+    }
+
     public function send($auto_clear = true) {
 
         $auto_clear = !empty($auto_clear);
