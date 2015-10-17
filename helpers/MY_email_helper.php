@@ -24,6 +24,12 @@ if (!function_exists('valid_email')) {
         $patternselect = 'auto';
     //
 
+        // Added by Ivan Tcholakov, 17-OCT-2015.
+        if (function_exists('idn_to_ascii') && $atpos = strpos($address, '@')) {
+            $address = substr($address, 0, ++$atpos).idn_to_ascii(substr($address, $atpos));
+        }
+        //
+
         if (!$patternselect or $patternselect == 'auto') {
             //Check this constant first so it works when extension_loaded() is disabled by safe mode
             //Constant was added in PHP 5.2.4
