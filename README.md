@@ -1,7 +1,7 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.1.28  
+Version: 1.2.0-dev  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2016.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
@@ -35,9 +35,11 @@ $config['smtp_host']        = 'smtp.gmail.com';
 $config['smtp_user']        = 'yourusername@gmail.com';
 $config['smtp_pass']        = 'yourpassword';
 $config['smtp_port']        = 465;
-$config['smtp_timeout']     = 5;                        // (in seconds)
+$config['smtp_timeout']     = 30;                       // (in seconds)
 $config['smtp_crypto']      = 'ssl';                    // '' or 'tls' or 'ssl'
 $config['smtp_debug']       = 0;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data, 3 = as 2 plus connection status, 4 = low level data output.
+$config['smtp_auto_tls']    = false;                    // Whether to enable TLS encryption automatically if a server supports it, even if `smtp_crypto` is not set to 'tls'.
+$config['smtp_conn_options'] = array();                 // SMTP connection options, an array passed to the function stream_context_create() when connecting via SMTP.
 $config['wordwrap']         = true;
 $config['wrapchars']        = 76;
 $config['mailtype']         = 'html';                   // 'text' or 'html'
