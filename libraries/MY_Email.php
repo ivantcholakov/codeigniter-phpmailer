@@ -46,6 +46,11 @@ class MY_Email extends CI_Email {
         'encoding' => '8bit',
         'smtp_auto_tls' => true,
         'smtp_conn_options' => array(),
+        'dkim_domain' => '',
+        'dkim_private' => '',
+        'dkim_selector' => '',
+        'dkim_passphrase' => '',
+        'dkim_identity' => '',
     );
 
     protected $properties = array();
@@ -995,6 +1000,9 @@ class MY_Email extends CI_Email {
         return $this;
     }
 
+    // PHPMailer: Whether to enable TLS encryption automatically if a server supports it,
+    // even if `SMTPSecure` is not set to 'tls'.
+    // Be aware that in PHP >= 5.6 this requires that the server's certificates are valid.
     public function set_smtp_auto_tls($value) {
 
         $value = !empty($value);
@@ -1008,6 +1016,7 @@ class MY_Email extends CI_Email {
         return $this;
     }
 
+    // PHPMailer: Options array passed to stream_context_create when connecting via SMTP.
     public function set_smtp_conn_options($value) {
 
         if (!is_array($value)) {
@@ -1018,6 +1027,76 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
             $this->phpmailer->SMTPOptions = $value;
+        }
+
+        return $this;
+    }
+
+    // PHPMailer: DKIM signing domain name, for exmple 'example.com'.
+    public function set_dkim_domain($value) {
+
+        $value = (string) $value;
+
+        $this->properties['dkim_domain'] = $value;
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->DKIM_domain = $value;
+        }
+
+        return $this;
+    }
+
+    // PHPMailer: DKIM private key file path.
+    public function set_dkim_private($value) {
+
+        $value = (string) $value;
+
+        $this->properties['dkim_private'] = $value;
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->DKIM_private = $value;
+        }
+
+        return $this;
+    }
+
+    // PHPMailer: DKIM selector.
+    public function set_dkim_selector($value) {
+
+        $value = (string) $value;
+
+        $this->properties['dkim_selector'] = $value;
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->DKIM_selector = $value;
+        }
+
+        return $this;
+    }
+
+    // PHPMailer: DKIM passphrase, used if your key is encrypted.
+    public function set_dkim_passphrase($value) {
+
+        $value = (string) $value;
+
+        $this->properties['dkim_passphrase'] = $value;
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->DKIM_passphrase = $value;
+        }
+
+        return $this;
+    }
+
+    // PHPMailer: DKIM Identity, usually the email address used as the source of the email.
+    public function set_dkim_identity($value) {
+
+        $value = (string) $value;
+
+        $this->properties['dkim_identity'] = $value;
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->DKIM_identity = $value;
         }
 
         return $this;
