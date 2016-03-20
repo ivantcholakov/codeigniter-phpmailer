@@ -2,15 +2,15 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.2.0-dev
+ * Version: 1.2.0
  * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2016.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
  * This library is intended to be compatible with CI 2.x and CI 3.x.
  *
- * Tested on CodeIgniter 3.0.5+ (March 16, 2016) and
- * PHPMailer Version 5.2.14+ (March 16, 2016).
+ * Tested on CodeIgniter 3.0.5+ (March 20, 2016) and
+ * PHPMailer Version 5.2.14+ (March 20, 2016).
  */
 
 class MY_Email extends CI_Email {
@@ -1017,6 +1017,7 @@ class MY_Email extends CI_Email {
     }
 
     // PHPMailer: Options array passed to stream_context_create when connecting via SMTP.
+    // See https://github.com/ivantcholakov/codeigniter-phpmailer/issues/12
     public function set_smtp_conn_options($value) {
 
         if (!is_array($value)) {
@@ -1031,6 +1032,8 @@ class MY_Email extends CI_Email {
 
         return $this;
     }
+
+    // DKIM signing, see https://github.com/ivantcholakov/codeigniter-phpmailer/issues/11
 
     // PHPMailer: DKIM signing domain name, for exmple 'example.com'.
     public function set_dkim_domain($value) {
