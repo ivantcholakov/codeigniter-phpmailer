@@ -1056,8 +1056,13 @@ class MY_Email extends CI_Email {
 
         $this->properties['dkim_private'] = $value;
 
+        // Parse the provided path seek for constant and translate it.
+        // For example the path to the private key could be set as follows:
+        // {APPPATH}config/rsa.private
+        $value_parsed = str_replace(array_keys(self::_get_file_name_variables()), array_values(self::_get_file_name_variables()), $value);
+
         if ($this->mailer_engine == 'phpmailer') {
-            $this->phpmailer->DKIM_private = $value;
+            $this->phpmailer->DKIM_private = $value_parsed;
         }
 
         return $this;
@@ -1271,6 +1276,26 @@ class MY_Email extends CI_Email {
                 $result[] = trim($match['1']);
             } else {
                 $result[] = '';
+            }
+        }
+
+        return $result;
+    }
+
+    protected static function _get_file_name_variables() {
+
+        static $result = null;
+
+        if ($result === null) {
+
+            $result = array('{APPPATH}' => APPPATH);
+
+            if (defined('COMMONPATH')) {
+                $result['{COMMONPATH}'] = COMMONPATH;
+            }
+
+            if (defined('PLATFORMPATH')) {
+                $result['{PLATFORMPATH}'] = PLATFORMPATH;
             }
         }
 
