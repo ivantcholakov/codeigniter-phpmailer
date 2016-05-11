@@ -2,7 +2,7 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.2.3
+ * Version: 1.2.4
  * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2016.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
@@ -12,6 +12,34 @@
  * Tested on CodeIgniter 3.0.6+ (May 10, 2016) and
  * PHPMailer Version 5.2.15 (May 10, 2016).
  */
+
+if (is_php('7')) {
+
+    // Suppress the warning "Declaration of Email::initialize($config = Array)
+    // should be compatible with CI_Email::initialize(array $config = Array)".
+
+    if (!function_exists('_email_library_error_handler')) {
+
+        function _email_library_error_handler($errno, $errstr, $errfile, $errline, $errcontext) {
+
+            global $_email_library_old_error_handler;
+
+            if (strpos($errstr, 'Declaration of') !== false && strpos($errstr, 'should be compatible with') !== false) {
+                return;
+            }
+
+            if (is_callable($_email_library_old_error_handler)) {
+                return call_user_func($_email_library_old_error_handler, $errno, $errstr, $errfile, $errline, $errcontext);
+            }
+
+            return false;
+        }
+
+        global $_email_library_old_error_handler;
+        $_email_library_old_error_handler = set_error_handler('_email_library_error_handler', E_WARNING);
+    }
+
+}
 
 class MY_Email extends CI_Email {
 
