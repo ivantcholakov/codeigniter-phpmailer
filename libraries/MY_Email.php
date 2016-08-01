@@ -24,7 +24,8 @@ if (is_php('7')) {
 
             global $_email_library_old_error_handler;
 
-            if (strpos($errstr, 'Declaration of') !== false && strpos($errstr, 'should be compatible with') !== false) {
+            //if (strpos($errstr, 'Declaration of') !== false && strpos($errstr, 'should be compatible with') !== false) {
+            if (strpos($errstr, 'CI_Email::initialize') !== false) {
                 return;
             }
 
