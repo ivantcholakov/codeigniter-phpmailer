@@ -1,13 +1,13 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.2.9  
+Version: 1.2.10  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2016.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
 This library is intended to be compatible with CI 2.x and CI 3.x.
 
-Tested on CodeIgniter 3.1.0 (July 26, 2016) and with PHPMailer Version 5.2.16+ (August 12, 2016).
+Tested on CodeIgniter 3.1.0 (July 26, 2016) and with PHPMailer Version 5.2.16+ (September 1, 2016).
 
 Installation
 ------------
@@ -34,9 +34,9 @@ $config['mailpath']         = '/usr/sbin/sendmail';
 $config['smtp_host']        = 'smtp.gmail.com';
 $config['smtp_user']        = 'yourusername@gmail.com';
 $config['smtp_pass']        = 'yourpassword';
-$config['smtp_port']        = 465;
+$config['smtp_port']        = 587;
 $config['smtp_timeout']     = 30;                       // (in seconds)
-$config['smtp_crypto']      = 'ssl';                    // '' or 'tls' or 'ssl'
+$config['smtp_crypto']      = 'tls';                    // '' or 'tls' or 'ssl'
 $config['smtp_debug']       = 0;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data, 3 = as 2 plus connection status, 4 = low level data output.
 $config['smtp_auto_tls']    = false;                    // Whether to enable TLS encryption automatically if a server supports it, even if `smtp_crypto` is not set to 'tls'.
 $config['smtp_conn_options'] = array();                 // SMTP connection options, an array passed to the function stream_context_create() when connecting via SMTP.
