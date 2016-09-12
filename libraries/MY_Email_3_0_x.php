@@ -1232,19 +1232,23 @@ class MY_Email extends CI_Email {
             return $body;
         }
 
-        // Also, a special helper function based on Markdown or Textile libraries may be used.
+        // You can implement your own helper function html_to_text().
         //
-        // An example of Markdown-based implementation, see http://milianw.de/projects/markdownify/
+        // An example of Markdownify-based implementation, see https://github.com/Elephant418/Markdownify
         //
-        // Make sure the class Markdownify_Extra is autoloaded (or simply loaded somehow).
-        // Place in MY_html_helper.php the following function.
+        // Install using Composer the following package: pixel418/markdownify
+        // Place in MY_html_helper.php the following function:
         //
         // function html_to_text($html) {
+        //
         //     static $parser;
+        //
         //     if (!isset($parser)) {
-        //         $parser = new Markdownify_Extra();
-        //         $parser->keepHTML = false;
+        //         $parser = new \Markdownify\ConverterExtra();
         //     }
+        //
+        //     $parser->setKeepHTML(false);
+        //
         //     return @ $parser->parseString($html);
         // }
         //
