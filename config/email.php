@@ -29,7 +29,8 @@ $config['encoding']         = '8bit';                   // The body encoding. Fo
 // See http://stackoverflow.com/questions/24463425/send-mail-in-phpmailer-using-dkim-keys
 // See https://github.com/PHPMailer/PHPMailer/blob/v5.2.14/test/phpmailerTest.php#L1708
 $config['dkim_domain']      = '';                       // DKIM signing domain name, for exmple 'example.com'.
-$config['dkim_private']     = '';                       // DKIM private key file path.
+$config['dkim_private']     = '';                       // DKIM private key, set as a file path.
+$config['dkim_private_string'] = '';                    // DKIM private key, set directly from a string.
 $config['dkim_selector']    = '';                       // DKIM selector.
 $config['dkim_passphrase']  = '';                       // DKIM passphrase, used if your key is encrypted.
 $config['dkim_identity']    = '';                       // DKIM Identity, usually the email address used as the source of the email.

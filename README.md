@@ -51,6 +51,14 @@ $config['newline']          = "\n";                     // "\r\n" or "\n" or "\r
 $config['bcc_batch_mode']   = false;
 $config['bcc_batch_size']   = 200;
 $config['encoding']         = '8bit';                   // The body encoding. For CodeIgniter: '8bit' or '7bit'. For PHPMailer: '8bit', '7bit', 'binary', 'base64', or 'quoted-printable'.
+
+// DKIM Signing
+$config['dkim_domain']      = '';                       // DKIM signing domain name, for exmple 'example.com'.
+$config['dkim_private']     = '';                       // DKIM private key, set as a file path.
+$config['dkim_private_string'] = '';                    // DKIM private key, set directly from a string.
+$config['dkim_selector']    = '';                       // DKIM selector.
+$config['dkim_passphrase']  = '';                       // DKIM passphrase, used if your key is encrypted.
+$config['dkim_identity']    = '';                       // DKIM Identity, usually the email address used as the source of the email.
 ```
 
 * Notes:

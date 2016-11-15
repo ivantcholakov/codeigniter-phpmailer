@@ -45,6 +45,7 @@ class MY_Email extends CI_Email {
         'smtp_conn_options' => array(),
         'dkim_domain' => '',
         'dkim_private' => '',
+        'dkim_private_string' => '',
         'dkim_selector' => '',
         'dkim_passphrase' => '',
         'dkim_identity' => '',
@@ -1048,7 +1049,7 @@ class MY_Email extends CI_Email {
         return $this;
     }
 
-    // PHPMailer: DKIM private key file path.
+    // PHPMailer: DKIM private key, set as a file path.
     public function set_dkim_private($value) {
 
         $value = (string) $value;
@@ -1062,6 +1063,32 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
             $this->phpmailer->DKIM_private = $value_parsed;
+        }
+
+        if ($value != '') {
+
+            // Reset the alternative setting.
+            $this->set_dkim_private_string('');
+        }
+
+        return $this;
+    }
+
+    // PHPMailer: DKIM private key, set directly from a string.
+    public function set_dkim_private_string($value) {
+
+        $value = (string) $value;
+
+        $this->properties['dkim_private_string'] = $value;
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->DKIM_private_string = $value;
+        }
+
+        if ($value != '') {
+
+            // Reset the alternative setting.
+            $this->set_dkim_private('');
         }
 
         return $this;
