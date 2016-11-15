@@ -1,13 +1,13 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.2.13  
+Version: 1.2.14  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2016.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
 This library is intended to be compatible with CI 2.x and CI 3.x.
 
-Tested on CodeIgniter 3.1.2+ (October 31, 2016) and with PHPMailer Version 5.2.16+ (October 26, 2016).
+Tested on CodeIgniter 3.1.2+ (November 14, 2016) and with PHPMailer Version 5.2.16+ (November 11, 2016).
 
 Installation
 ------------
