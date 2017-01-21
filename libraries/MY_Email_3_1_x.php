@@ -288,12 +288,13 @@ class MY_Email extends CI_Email {
                 $this->validate_email($to);
             }
 
-            reset($names);
+            $i = 0;
 
             foreach ($to as $address) {
 
-                list($key, $name) = each($names);
-                $this->phpmailer->addAddress($address, $name);
+                $this->phpmailer->addAddress($address, $names[$i]);
+
+                $i++;
             }
 
         } else {
@@ -316,12 +317,13 @@ class MY_Email extends CI_Email {
                 $this->validate_email($cc);
             }
 
-            reset($names);
+            $i = 0;
 
             foreach ($cc as $address) {
 
-                list($key, $name) = each($names);
-                $this->phpmailer->addCC($address, $name);
+                $this->phpmailer->addCC($address, $names[$i]);
+
+                $i++;
             }
 
         } else {
@@ -344,12 +346,13 @@ class MY_Email extends CI_Email {
                 $this->validate_email($bcc);
             }
 
-            reset($names);
+            $i = 0;
 
             foreach ($bcc as $address) {
 
-                list($key, $name) = each($names);
-                $this->phpmailer->addBCC($address, $name);
+                $this->phpmailer->addBCC($address, $names[$i]);
+
+                $i++;
             }
 
         } else {
