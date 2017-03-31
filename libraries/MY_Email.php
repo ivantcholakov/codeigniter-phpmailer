@@ -12,7 +12,7 @@
  * Tested on CodeIgniter 3.1.3+ (March 15th, 2017) and
  * PHPMailer Version 5.2.23 (March 15th, 2017).
  */
-///??
+///?
 if (version_compare(CI_VERSION, '3.1.0') >= 0) {
     require_once dirname(__FILE__).'/MY_Email_3_1_x.php';
 } else {
