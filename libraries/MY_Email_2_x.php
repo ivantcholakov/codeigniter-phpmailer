@@ -7,7 +7,7 @@
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
- * This class is intended to be compatible with CI 3.1.x.
+ * This class is intended to be compatible with CI 2.x.
  */
 
 class MY_Email extends CI_Email {
@@ -64,11 +64,15 @@ class MY_Email extends CI_Email {
 
     // The Constructor ---------------------------------------------------------
 
-    public function __construct(array $config = array()) {
+    public function __construct($config = array()) {
 
         $this->CI = get_instance();
         $this->CI->load->helper('email');
         $this->CI->load->helper('html');
+
+        if (!is_array($config)) {
+            $config = array();
+        }
 
         // Wipe out certain properties that are declared within the parent class.
         // These properties would be accessed by magic.
@@ -167,7 +171,11 @@ class MY_Email extends CI_Email {
 
     // Initialization & Clearing -----------------------------------------------
 
-    public function initialize(array $config = array()) {
+    public function initialize($config = array()) {
+
+        if (!is_array($config)) {
+            $config = array();
+        }
 
         foreach ($config as $key => $value) {
             $this->{$key} = $value;
@@ -236,7 +244,7 @@ class MY_Email extends CI_Email {
 
         } else {
 
-            parent::from($from, $name, $return_path);
+            parent::from($from, $name);
         }
 
         return $this;
@@ -479,7 +487,7 @@ class MY_Email extends CI_Email {
 
         } else {
 
-            parent::attach($file, $disposition, $newname, $mime);
+            parent::attach($file, $disposition);
         }
 
         return $this;
@@ -498,9 +506,6 @@ class MY_Email extends CI_Email {
                 }
             }
 
-        } else {
-
-            return parent::attachment_cid($filename);
         }
 
         return FALSE;
@@ -565,7 +570,7 @@ class MY_Email extends CI_Email {
 
         } else {
 
-            $result = parent::send($auto_clear);
+            $result = parent::send();
         }
 
         return $result;
@@ -795,8 +800,6 @@ class MY_Email extends CI_Email {
 
     public function set_wrapchars($wrapchars) {
 
-        $wrapchars = (int) $wrapchars;
-
         $this->properties['wrapchars'] = $wrapchars;
 
         if ($this->mailer_engine == 'phpmailer') {
@@ -857,7 +860,7 @@ class MY_Email extends CI_Email {
         return $this;
     }
 
-    public function set_alt_message($str) {
+    public function set_alt_message($str = '') {
 
         $this->properties['alt_message'] = (string) $str;
 

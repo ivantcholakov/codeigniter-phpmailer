@@ -7,7 +7,7 @@
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
- * This class is intended to be compatible with CI 2.x and CI 3.0.x.
+ * This class is intended to be compatible with CI 3.0.x.
  */
 
 class MY_Email extends CI_Email {
@@ -55,7 +55,6 @@ class MY_Email extends CI_Email {
 
     protected $mailer_engine = 'codeigniter';
     protected $CI;
-    protected $_is_ci_3 = NULL;
 
     protected static $protocols = array('mail', 'sendmail', 'smtp');
     protected static $mailtypes = array('html', 'text');
@@ -66,8 +65,6 @@ class MY_Email extends CI_Email {
     // The Constructor ---------------------------------------------------------
 
     public function __construct($config = array()) {
-
-        $this->_is_ci_3 = (bool) ((int) CI_VERSION >= 3);
 
         $this->CI = get_instance();
         $this->CI->load->helper('email');
@@ -247,11 +244,7 @@ class MY_Email extends CI_Email {
 
         } else {
 
-            if ($this->_is_ci_3) {
-                parent::from($from, $name, $return_path);
-            } else {
-                parent::from($from, $name);
-            }
+            parent::from($from, $name, $return_path);
         }
 
         return $this;
@@ -494,11 +487,7 @@ class MY_Email extends CI_Email {
 
         } else {
 
-            if ($this->_is_ci_3) {
-                parent::attach($file, $disposition, $newname, $mime);
-            } else {
-                parent::attach($file, $disposition);
-            }
+            parent::attach($file, $disposition, $newname, $mime);
         }
 
         return $this;
@@ -517,7 +506,7 @@ class MY_Email extends CI_Email {
                 }
             }
 
-        } elseif ($this->_is_ci_3) {
+        } else {
 
             return parent::attachment_cid($filename);
         }
@@ -584,11 +573,7 @@ class MY_Email extends CI_Email {
 
         } else {
 
-            if ($this->_is_ci_3) {
-                $result = parent::send($auto_clear);
-            } else {
-                $result = parent::send();
-            }
+            $result = parent::send($auto_clear);
         }
 
         return $result;
@@ -818,9 +803,7 @@ class MY_Email extends CI_Email {
 
     public function set_wrapchars($wrapchars) {
 
-        if ($this->_is_ci_3) {
-            $wrapchars = (int) $wrapchars;
-        }
+        $wrapchars = (int) $wrapchars;
 
         $this->properties['wrapchars'] = $wrapchars;
 
