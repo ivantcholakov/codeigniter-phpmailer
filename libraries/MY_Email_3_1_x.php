@@ -39,7 +39,7 @@ class MY_Email extends CI_Email {
         'send_multipart' => TRUE,
         'bcc_batch_mode' => FALSE,
         'bcc_batch_size' => 200,
-        'debug_output' => 'html',
+        'debug_output' => 'echo',
         'smtp_debug' => 0,
         'encoding' => '8bit',
         'smtp_auto_tls' => true,
@@ -70,6 +70,9 @@ class MY_Email extends CI_Email {
         $this->CI = get_instance();
         $this->CI->load->helper('email');
         $this->CI->load->helper('html');
+
+        // Set the default property 'debug_output' by using CLI autodetection.
+        self::$default_properties['debug_output'] = (strpos(PHP_SAPI, 'cli') !== false OR defined('STDIN')) ? 'echo' : 'html';
 
         // Wipe out certain properties that are declared within the parent class.
         // These properties would be accessed by magic.
@@ -940,27 +943,6 @@ class MY_Email extends CI_Email {
         return $this;
     }
 
-    // PHPMailer's SMTP debug output.
-    // How to handle debug output.
-    // Options:
-    // `html` Output escaped, line breaks converted to `<br>`, appropriate for browser output. This is default value for CodeIgniter
-    // `echo` Output plain-text as-is, should be avoid in web production
-    // `error_log` Output to error log as configured in php.ini
-    //
-    // Alternatively, you can provide a callable expecting two params: a message string and the debug level:
-    // <code>
-    // function custom_debug($str, $level) {echo "debug level $level; message: $str";};
-    // set_debug_output(custom_debug);
-    // </code>
-    public function set_debug_output($handle) {
-
-        if ($this->mailer_engine == 'phpmailer') {
-            $this->phpmailer->Debugoutput = $handle;
-        }
-
-        return $this;
-    }
-
     // PHPMailer's SMTP debug info level.
     // 0 = off, 1 = commands, 2 = commands and data, 3 = as 2 plus connection status, 4 = low level data output.
     public function set_smtp_debug($level) {
@@ -975,6 +957,29 @@ class MY_Email extends CI_Email {
 
         if ($this->mailer_engine == 'phpmailer') {
             $this->phpmailer->SMTPDebug = $level;
+        }
+
+        return $this;
+    }
+
+    // PHPMailer's SMTP debug output.
+    // How to handle debug output.
+    // Options:
+    // `html` Output escaped, line breaks converted to `<br>`, appropriate for browser output. This is default value for CodeIgniter
+    // `echo` Output plain-text as-is, should be avoid in web production
+    // `error_log` Output to error log as configured in php.ini
+    //
+    // Alternatively, you can provide a callable expecting two params: a message string and the debug level:
+    // <code>
+    // function custom_debug($str, $level) {echo "debug level $level; message: $str";};
+    // set_debug_output(custom_debug);
+    // </code>
+    public function set_debug_output($handle) {
+
+        $this->properties['debug_output'] = $handle;
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->Debugoutput = $handle;
         }
 
         return $this;
