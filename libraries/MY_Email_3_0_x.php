@@ -39,6 +39,7 @@ class MY_Email extends CI_Email {
         'send_multipart' => TRUE,
         'bcc_batch_mode' => FALSE,
         'bcc_batch_size' => 200,
+        'debug_output' => 'html',
         'smtp_debug' => 0,
         'encoding' => '8bit',
         'smtp_auto_tls' => true,
@@ -943,6 +944,27 @@ class MY_Email extends CI_Email {
     public function set_bcc_batch_size($value) {
 
         $this->properties['bcc_batch_size'] = (int) $value;
+
+        return $this;
+    }
+
+    // PHPMailer's SMTP debug output.
+    // How to handle debug output.
+    // Options:
+    // `html` Output escaped, line breaks converted to `<br>`, appropriate for browser output. This is default value for CodeIgniter
+    // `echo` Output plain-text as-is, should be avoid in web production
+    // `error_log` Output to error log as configured in php.ini
+    //
+    // Alternatively, you can provide a callable expecting two params: a message string and the debug level:
+    // <code>
+    // function custom_debug($str, $level) {echo "debug level $level; message: $str";};
+    // set_debug_output(custom_debug);
+    // </code>
+    public function set_debug_output($handle) {
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->Debugoutput = $handle;
+        }
 
         return $this;
     }
