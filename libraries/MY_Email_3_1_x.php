@@ -39,7 +39,7 @@ class MY_Email extends CI_Email {
         'send_multipart' => TRUE,
         'bcc_batch_mode' => FALSE,
         'bcc_batch_size' => 200,
-        'debug_output' => 'echo',
+        'debug_output' => '',
         'smtp_debug' => 0,
         'encoding' => '8bit',
         'smtp_auto_tls' => true,
@@ -965,9 +965,10 @@ class MY_Email extends CI_Email {
     // PHPMailer's SMTP debug output.
     // How to handle debug output.
     // Options:
-    // `html` Output escaped, line breaks converted to `<br>`, appropriate for browser output. This is default value for CodeIgniter
-    // `echo` Output plain-text as-is, should be avoid in web production
-    // `error_log` Output to error log as configured in php.ini
+    // `html` - Output escaped, line breaks converted to `<br>`, appropriate for browser output. This is default value for CodeIgniter
+    // `echo` - Output plain-text as-is, should be avoid in web production
+    // `error_log` - Output to error log as configured in php.ini
+    // NULL or '' - default: 'echo' on CLI, 'html' otherwise.
     //
     // Alternatively, you can provide a callable expecting two params: a message string and the debug level:
     // <code>
@@ -975,6 +976,13 @@ class MY_Email extends CI_Email {
     // set_debug_output(custom_debug);
     // </code>
     public function set_debug_output($handle) {
+
+        if ($handle === null
+            ||
+            is_string($handle) && $handle == ''
+        ) {
+            $handle = self::$default_properties['debug_output'];
+        }
 
         $this->properties['debug_output'] = $handle;
 
