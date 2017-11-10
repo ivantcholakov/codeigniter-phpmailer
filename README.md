@@ -17,7 +17,6 @@ Download this package and uncompress it within `application/` directory of your 
 PHPMailer Links
 ---------------
 
-http://phpmailer.worxware.com/  
 https://github.com/PHPMailer/PHPMailer
 
 Setting It Up (An Example)
