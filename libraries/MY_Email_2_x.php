@@ -14,6 +14,8 @@ class MY_Email extends CI_Email {
 
     public $phpmailer;  // This property has been made public for testing purposes.
 
+    protected $_attachments = array();
+
     protected static $default_properties = array(
         'useragent' => 'CodeIgniter',
         'mailpath' => '/usr/sbin/sendmail',
