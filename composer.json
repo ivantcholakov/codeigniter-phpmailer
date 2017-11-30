@@ -1,0 +1,20 @@
+{
+    "name": "codeigniter/phpmailer",
+    "description": "A CodeIgniter compatible email-library powered by PHPMailer",
+    "keywords": ["codeigniter", "phpmailer", "email"],
+    "type": "codeigniter-third-party",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joël Gaujard",
+            "email": "joel@depiltech.com",
+            "homepage": "http://depiltech.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.2.4",
+        "phpmailer/phpmailer": "^6.0",
+        "composer/installers": "^1.4"
+    }
+}
