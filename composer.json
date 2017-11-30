@@ -14,7 +14,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.2.4",
-        "phpmailer/phpmailer": "^6.0",
+        "phpmailer/phpmailer": "^5.2",
         "composer/installers": "^1.4"
     }
 }
