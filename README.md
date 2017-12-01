@@ -117,6 +117,39 @@ At the end remove this test.
 
 The API of this library is the same as the original Email API. Read the CodeIgniter's manual about [Email Class](https://www.codeigniter.com/user_guide/libraries/email.html).
 
+Using Composer for Installing PHPMailer 5.2
+-------------------------------------------
+
+This library uses PHPMailer 5.2 which is in maintenance development mode, the last its released version is 5.2.26.
+If you anyway want to avoid to update manually possible future releases of PHPMailer 5.2, you can use Composer for
+doing this job.
+
+First, you need to have Composer locally or globally installed on your development machine see the instructions for that: https://getcomposer.org/doc/00-intro.md
+Then you need to enable Composer to be used by CodeIgniter.
+
+* For CodeIgniter 2 there is no officially suggested/supported way for that, you can use the hint from this Phil Sturgeon's article: https://philsturgeon.uk/php/2012/05/07/composer-with-codeigniter/
+* For CodeIgniter 3 check this page from its documentation: https://www.codeigniter.com/user_guide/general/autoloader.html You need to see or decide when your vendor/ directory is (to be) and within the
+CodeIgniter's configuration file application/config/config.php you need to set the configuration option $config['composer_autoload'] accordingly.
+
+Then, third, add to your composer.json uder the section "require" the following line:
+```
+"phpmailer/phpmailer": "^5.2.26"
+```
+It might need a comma at the end if the list "require" continues. Or, alternatively from command line interface run the following command:
+```
+composer require phpmailer/phpmailer:^5.2.26
+```
+The command
+```
+composer update
+```
+will install or update PHPMailer.
+
+Forth, delete the not needed anymore directory application/third_party/phpmailer/ .
+
+Lately, from your development machine you are to upload on the production server the whole CodeIgniter-based project, together with the files composer.json, composer.lock, and the directory vendor/ .
+Avoid using Composer on your production server. Composer is a version management tool for developers, its alone is not a deployment tool.
+
 Readings
 --------
 
