@@ -2,7 +2,7 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.2.28
+ * Version: 1.2.29
  * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2017.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
