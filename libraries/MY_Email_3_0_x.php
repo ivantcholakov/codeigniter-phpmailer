@@ -19,6 +19,7 @@ class MY_Email extends CI_Email {
         'mailpath' => '/usr/sbin/sendmail',
         'protocol' => 'mail',
         'smtp_host' => '',
+        'smtp_auth' => NULL,
         'smtp_user' => '',
         'smtp_pass' => '',
         'smtp_port' => 25,
@@ -704,12 +705,33 @@ class MY_Email extends CI_Email {
         return $this;
     }
 
+    // See https://github.com/ivantcholakov/codeigniter-phpmailer/issues/31
+    public function set_smtp_auth($value) {
+
+        $this->properties['smtp_auth'] = $value;
+
+        $this->_smtp_auth =
+            $value === NULL
+                ? !($this->smtp_user == '' && $this->smtp_pass == '')
+                : !empty($value);
+
+        if ($this->mailer_engine == 'phpmailer') {
+            $this->phpmailer->SMTPAuth = $this->_smtp_auth;
+        }
+
+        return $this;
+    }
+
     public function set_smtp_user($value) {
 
         $value = (string) $value;
 
         $this->properties['smtp_user'] = $value;
-        $this->_smtp_auth = !($value == '' && $this->smtp_pass == '');
+
+        $this->_smtp_auth =
+            $this->smtp_auth === NULL
+                ? !($value == '' && $this->smtp_pass == '')
+                : !empty($this->smtp_auth);
 
         if ($this->mailer_engine == 'phpmailer') {
 
@@ -725,7 +747,11 @@ class MY_Email extends CI_Email {
         $value = (string) $value;
 
         $this->properties['smtp_pass'] = $value;
-        $this->_smtp_auth = !($this->smtp_user == '' && $value == '');
+
+        $this->_smtp_auth =
+            $this->smtp_auth === NULL
+                ? !($this->smtp_user == '' && $value == '')
+                : !empty($this->smtp_auth);
 
         if ($this->mailer_engine == 'phpmailer') {
 
