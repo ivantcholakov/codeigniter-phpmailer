@@ -1,13 +1,13 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.2.30  
+Version: 1.2.31  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2018.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
 This library is intended to be compatible with CI 2.x and CI 3.x.
 
-Tested on CodeIgniter 3.1.8 (March 22th, 2018) and PHPMailer Version 5.2.26 (November 4th, 2017).
+Tested on CodeIgniter 3.1.10-dev (December 6th, 2018) and PHPMailer Version 5.2.27 (November 16th, 2018).
 
 Installation
 ------------
@@ -121,7 +121,7 @@ The API of this library is the same as the original Email API. Read the CodeIgni
 Using Composer for Installing PHPMailer 5.2
 -------------------------------------------
 
-This library uses PHPMailer 5.2 which is in maintenance development mode, the last its released version is 5.2.26.
+This library uses PHPMailer 5.2 which is in maintenance development mode, the last its released version is 5.2.27.
 If you anyway want to avoid to update manually possible future releases of PHPMailer 5.2, you can use Composer for
 doing this job.
 
@@ -134,11 +134,11 @@ CodeIgniter's configuration file application/config/config.php you need to set t
 
 Then, third, add to your composer.json uder the section "require" the following line:
 ```
-"phpmailer/phpmailer": "^5.2.26"
+"phpmailer/phpmailer": "^5.2.27"
 ```
 It might need a comma at the end if the list "require" continues. Or, alternatively from command line interface run the following command:
 ```
-composer require phpmailer/phpmailer:^5.2.26
+composer require phpmailer/phpmailer:^5.2.27
 ```
 The command
 ```
