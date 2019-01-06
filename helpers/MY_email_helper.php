@@ -2,7 +2,7 @@
 
 if (!function_exists('valid_email')) {
 
-    // This function has been borrowed from PHPMailer Version 5.2.17.
+    // This function has been borrowed from PHPMailer Version 5.2.27.
     /**
      * Check that a string looks like an email address.
      * @param string $address The email address to check
