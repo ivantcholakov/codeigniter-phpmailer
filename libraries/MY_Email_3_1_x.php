@@ -616,6 +616,7 @@ class MY_Email extends CI_Email {
                 }
 
                 $this->phpmailer = new PHPMailer();
+                PHPMailer::$validator = 'valid_email';
 
                 // The property PluginDir seems to be useless, setting it just in case.
                 if (property_exists($this->phpmailer, 'PluginDir')) {
@@ -1180,7 +1181,12 @@ class MY_Email extends CI_Email {
 
     public function valid_email($email) {
 
-        return valid_email($email);
+        if ($this->mailer_engine == 'phpmailer') {
+
+            return valid_email($email);
+        }
+
+        return parent::valid_email($email);
     }
 
 
