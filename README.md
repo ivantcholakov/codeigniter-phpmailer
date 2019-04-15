@@ -150,5 +150,4 @@ Avoid using Composer on your production server. Composer is a version management
 Readings
 --------
 
-* http://bisakomputer.com/membuat-pengiriman-email-terjadwal-dengan-framework-codeigniter/ - "Membuat Pengiriman Email Terjadwal dengan Framework CodeIgniter" by Arif Rachman, in Indonesian language.
 * https://www.youtube.com/watch?v=UGzZ0qyODDo - "Bibliotecas Codeigniter - PHPMailer", Wagner Faria dos Santos
