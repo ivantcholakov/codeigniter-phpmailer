@@ -73,7 +73,12 @@ Set $config['useragent'] as 'PHPMailer' if the original 'CodeIgniter' engine fai
 $this->load->library('email');
 
 $subject = 'This is a test';
-$message = '<p>This message has been sent for testing purposes.</p>';
+$message = '
+    <p>This message has been sent for testing purposes.</p>
+
+    <!-- Attaching an image example - an inline logo. -->
+    <p><img src="cid:logo_src" /></p>
+';
 
 // Get full html:
 $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -94,6 +99,15 @@ $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://
 </html>';
 // Also, for getting full html you may use the following internal method:
 //$body = $this->email->full_html($subject, $message);
+
+// Attaching the logo first.
+$file_logo = FCPATH.'apple-touch-icon-precomposed.png';  // Change the path accordingly.
+// The last additional parameter is set to true in order
+// the image (logo) to appear inline, within the message text:
+$this->email->attach($file_logo, 'inline', null, '', true);
+$cid_logo = $this->email->get_attachment_cid($file_logo);
+$body = str_replace('cid:logo_src', 'cid:'.$cid_logo, $body);
+// End attaching the logo.
 
 $result = $this->email
     ->from('yourusername@gmail.com')
