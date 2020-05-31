@@ -1,13 +1,13 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.3.3  
+Version: 1.3.4  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2020.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
 This library is intended to be compatible with CI 2.x and CI 3.x.
 
-Tested on CodeIgniter 3.1.11 (September 19th, 2019) and PHPMailer Version 6.1.5 (March 14th, 2020).
+Tested on CodeIgniter 3.1.11 (September 19th, 2019) and PHPMailer Version 6.1.6 (May 27th, 2020).
 
 Installation
 ------------
@@ -136,7 +136,7 @@ Using Composer for Installing PHPMailer 6
 -----------------------------------------
 
 When CodeIgniter version is 3.1.0 or greater and PHP version is 5.5 or greater The library tries to find and load
-PHPMailer 6. Otherwise 5.2.27 ig going to be used, its files are under the directory third_party/phpmailer in this project.
+PHPMailer 6. Otherwise 5.2.27 is going to be used, its files are under the directory third_party/phpmailer in this project.
 If you intend to use PHPMailer 6, you need to use Composer for installing it.
 
 First, you need to have Composer locally or globally installed on your development machine see the instructions for that: https://getcomposer.org/doc/00-intro.md .
@@ -146,11 +146,11 @@ CodeIgniter's configuration file application/config/config.php you need to set t
 
 Then, third, add to your composer.json uder the section "require" the following line:
 ```
-"phpmailer/phpmailer": "^6.1.1"
+"phpmailer/phpmailer": "^6.1.6"
 ```
 It might need a comma at the end if the list "require" continues. Or, alternatively from command line interface run the following command:
 ```
-composer require phpmailer/phpmailer:^6.1.1
+composer require phpmailer/phpmailer:^6.1.6
 ```
 The command
 ```
