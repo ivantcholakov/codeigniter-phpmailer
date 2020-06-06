@@ -1,11 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed.');
 
-// A place where you can move your custom helper functions,
-// that are to be loaded before the functions below.
-if (is_file(dirname(__FILE__).'/MY_email_helper_0.php')) {
-    require_once dirname(__FILE__).'/MY_email_helper_0.php';
-}
-
 if (!function_exists('valid_email')) {
 
     // This function has been borrowed from PHPMailer Version 5.2.27.
@@ -143,10 +137,4 @@ if (!function_exists('name_email_format')) {
         return $name.' <'.$email.'>';
     }
 
-}
-
-// A place where you can move your custom helper functions,
-// that are to be loaded after the functions above.
-if (is_file(dirname(__FILE__).'/MY_email_helper_2.php')) {
-    require_once dirname(__FILE__).'/MY_email_helper_2.php';
 }
