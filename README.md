@@ -17,34 +17,89 @@ https://github.com/PHPMailer/PHPMailer
 Installation
 ------------
 
-Download this package and uncompress it within `application/` directory of your CodeIgniter site.
+Enable Composer to be used by CodeIgniter. Check this page from its documentation:
+https://www.codeigniter.com/userguide3/general/autoloader.html .
+You need to see or decide when your vendor/ directory is (to be) and within the
+CodeIgniter's configuration file application/config/config.php you need to set the
+configuration option $config['composer_autoload'] accordingly. For the typical location
+application/vendor/ the configuration setting would look like this:
 
-You need to have Composer locally or globally installed on your development machine see the instructions for that: https://getcomposer.org/doc/00-intro.md .
+```php
+$config['composer_autoload'] = APPPATH.'vendor/autoload.php';
+```
 
-Enable Composer to be used by CodeIgniter. Check this page from its documentation: https://www.codeigniter.com/userguide3/general/autoloader.html . You need to see or decide when your vendor/ directory is (to be) and within the
-CodeIgniter's configuration file application/config/config.php you need to set the configuration option $config['composer_autoload'] accordingly.
+Within application/config/constants.php add the following lines:
 
-Then add to your composer.json under the section "require" the following line:
+```php
+// Path to Composer's vendor/ directory, it should end with a trailing slash.
+defined('VENDORPATH') OR define('VENDORPATH', rtrim(str_replace('\\', '/', realpath(dirname(APPPATH.'vendor/autoload.php'))), '/').'/');
 ```
-"phpmailer/phpmailer": "^6.1.6"
+
+It is assumed that Composer's vendor/ directory is placed under CodeIgniter's
+application/ directory. Otherwise correct the setting so VENDORPATH to point correctly.
+
+If PHPMailer was previously installed through Composer, uninstall it temporarily:
+
 ```
-It might need a comma at the end if the list "require" continues. Or, alternatively from command line interface run the following command:
+composer remove PHPMailer/PHPMailer
 ```
-composer require phpmailer/phpmailer:^6.1.6
+
+Now install this library's package, it will install a correct version of PHPMailer:
+
 ```
-The command
+composer require ivantcholakov/codeigniter-phpmailer
+```
+
+Create the file application/helpers/MY_email_helper.php with the following content:
+
+```php
+<?php defined('BASEPATH') OR exit('No direct script access allowed.');
+
+// A place where you can move your custom helper functions,
+// that are to be loaded before the functions below.
+// If it is needed, create the corresponding file, insert
+// your source there and uncomment the following lines.
+//if (is_file(dirname(__FILE__).'/MY_email_helper_0.php')) {
+//    require_once dirname(__FILE__).'/MY_email_helper_0.php';
+//}
+
+// Instead of copying manually or through script in this directory,
+// let us just load here the provided by Composer file.
+if (is_file(VENDORPATH.'ivantcholakov/codeigniter-phpmailer/helpers/MY_email_helper.php')) {
+    require_once VENDORPATH.'ivantcholakov/codeigniter-phpmailer/helpers/MY_email_helper.php';
+}
+
+// A place where you can move your custom helper functions,
+// that are to be loaded after the functions above.
+// If it is needed, create the corresponding file, insert
+// your source there and uncomment the following lines.
+//if (is_file(dirname(__FILE__).'/MY_email_helper_2.php')) {
+//    require_once dirname(__FILE__).'/MY_email_helper_2.php';
+//}
+```
+
+Create the file application/libraries/MY_Email.php with the following content:
+
+```php
+<?php defined('BASEPATH') OR exit('No direct script access allowed.');
+
+// Instead of copying manually or through script in this directory,
+// let us just load here the provided by Composer file.
+require_once VENDORPATH.'ivantcholakov/codeigniter-phpmailer/libraries/MY_Email.php';
+```
+
+This is an installation that is to be done once. Updating to next versions of
+this package and PHPMailer would be done later easily:
+
 ```
 composer update
 ```
-will install or update PHPMailer.
 
-Lately, from your development machine you are to upload on the production server the whole CodeIgniter-based project, together with the files composer.json, composer.lock, and the directory vendor/ .
-Avoid using Composer on your production server. Composer is a version management tool for developers, its alone is not a deployment tool.
+Library's Configuration and Sending an E-mail (An Example)
+----------------------------------------------------------
 
-Setting It Up (An Example)
---------------------------
-
-* Edit the file `application/config/email.php` which contains the default settings for the email engine. For a Gmail account, the setting might be something like this:
+Create if necessary or edit the file `application/config/email.php` which contains
+the default settings for the email engine. For a Gmail account, the setting might be something like this:
 
 ```php
 <?php defined('BASEPATH') OR exit('No direct script access allowed.');
@@ -84,12 +139,11 @@ $config['dkim_passphrase']  = '';                       // DKIM passphrase, used
 $config['dkim_identity']    = '';                       // DKIM Identity, usually the email address used as the source of the email.
 ```
 
-* Notes:
+Notes:
+Set $config['useragent'] as 'PHPMailer' in order PHPMailer engine to be used.
+PHP openssl module should be enabled if encrypted SMTP access is required.
 
-PHP openssl module should be enabled if encrypted SMTP access is required;  
-Set $config['useragent'] as 'PHPMailer' if the original 'CodeIgniter' engine fails for some reason.
-
-* Within a controller paste the following code for testing purposes:
+Within a controller paste the following code for testing purposes:
 
 ```php
 $this->load->library('email');
