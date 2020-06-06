@@ -130,7 +130,7 @@ Note, that most of the SMTP servers require "from" address of the message to be 
 
 At the end remove this test.
 
-The API of this library is the same as the original Email API. Read the CodeIgniter's manual about [Email Class](https://www.codeigniter.com/user_guide/libraries/email.html).
+The API of this library is the same as the original Email API. Read the CodeIgniter's manual about [Email Class](https://www.codeigniter.com/userguide3/libraries/email.html).
 
 Using Composer for Installing PHPMailer 6
 -----------------------------------------
@@ -141,7 +141,7 @@ If you intend to use PHPMailer 6, you need to use Composer for installing it.
 
 First, you need to have Composer locally or globally installed on your development machine see the instructions for that: https://getcomposer.org/doc/00-intro.md .
 
-Then you need to enable Composer to be used by CodeIgniter. Check this page from its documentation: https://www.codeigniter.com/user_guide/general/autoloader.html . You need to see or decide when your vendor/ directory is (to be) and within the
+Then you need to enable Composer to be used by CodeIgniter. Check this page from its documentation: https://www.codeigniter.com/userguide3/general/autoloader.html . You need to see or decide when your vendor/ directory is (to be) and within the
 CodeIgniter's configuration file application/config/config.php you need to set the configuration option $config['composer_autoload'] accordingly.
 
 Then, third, add to your composer.json uder the section "require" the following line:
