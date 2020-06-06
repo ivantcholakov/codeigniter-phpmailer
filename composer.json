@@ -1,0 +1,19 @@
+{
+    "name": "ivantcholakov/codeigniter-phpmailer",
+    "description": "A CodeIgniter 3 compatible email-library powered by PHPMailer.",
+    "keywords": ["php", "codeigniter", "phpmailer"],
+    "homepage": "https://github.com/ivantcholakov/codeigniter-phpmailer",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ivan Tcholakov",
+            "email": "ivantcholakov@gmail.com",
+            "homepage": "https://github.com/ivantcholakov"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "phpmailer/phpmailer": "^6.1.6"
+    }
+}
