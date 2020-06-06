@@ -200,10 +200,16 @@ echo $this->email->print_debugger();
 exit;
 ```
 
-Load the corresponding page, executte this code. Check whether an email has been sent. Read the error message, if any, and make corrections in your settings.
+Load the corresponding page, executte this code. Check whether an email has been sent. Read the error message,
+if any, and make corrections in your settings.
 
-Note, that most of the SMTP servers require "from" address of the message to be the same as the address within $config['smtp_user'] setting.
+Note, that most of the SMTP servers require "from" address of the message to be the same as the address within
+$config['smtp_user'] setting.
 
 At the end remove this test.
 
-The API of this library is the same as the original Email API. Read the CodeIgniter's manual about [Email Class](https://www.codeigniter.com/userguide3/libraries/email.html).
+The API of this library is the same as the original Email API. Read the CodeIgniter's manual about
+[Email Class](https://www.codeigniter.com/userguide3/libraries/email.html).
+
+For supporting CodeIgniter 2.x and CodeIgniter 3.0.x a manual installation of an older version of this
+library is needed, see https://github.com/ivantcholakov/codeigniter-phpmailer/tree/1.3-stable
