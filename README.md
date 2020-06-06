@@ -136,7 +136,7 @@ Using Composer for Installing PHPMailer 6
 -----------------------------------------
 
 When CodeIgniter version is 3.1.0 or greater and PHP version is 5.5 or greater The library tries to find and load
-PHPMailer 6. Otherwise 5.2.27 is going to be used, its files are under the directory third_party/phpmailer in this project.
+PHPMailer 6. Otherwise 5.2.28 is going to be used, its files are under the directory third_party/phpmailer in this project.
 If you intend to use PHPMailer 6, you need to use Composer for installing it.
 
 First, you need to have Composer locally or globally installed on your development machine see the instructions for that: https://getcomposer.org/doc/00-intro.md .
