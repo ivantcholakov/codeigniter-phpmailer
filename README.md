@@ -9,15 +9,37 @@ This library is intended to be compatible with CI 2.x and CI 3.x.
 
 Tested on CodeIgniter 3.1.11 (September 19th, 2019) and PHPMailer Version 6.1.6 (May 27th, 2020).
 
+PHPMailer Links
+---------------
+
+https://github.com/PHPMailer/PHPMailer
+
 Installation
 ------------
 
 Download this package and uncompress it within `application/` directory of your CodeIgniter site.
 
-PHPMailer Links
----------------
+You need to have Composer locally or globally installed on your development machine see the instructions for that: https://getcomposer.org/doc/00-intro.md .
 
-https://github.com/PHPMailer/PHPMailer
+Enable Composer to be used by CodeIgniter. Check this page from its documentation: https://www.codeigniter.com/userguide3/general/autoloader.html . You need to see or decide when your vendor/ directory is (to be) and within the
+CodeIgniter's configuration file application/config/config.php you need to set the configuration option $config['composer_autoload'] accordingly.
+
+Then, third, add to your composer.json under the section "require" the following line:
+```
+"phpmailer/phpmailer": "^6.1.6"
+```
+It might need a comma at the end if the list "require" continues. Or, alternatively from command line interface run the following command:
+```
+composer require phpmailer/phpmailer:^6.1.6
+```
+The command
+```
+composer update
+```
+will install or update PHPMailer.
+
+Lately, from your development machine you are to upload on the production server the whole CodeIgniter-based project, together with the files composer.json, composer.lock, and the directory vendor/ .
+Avoid using Composer on your production server. Composer is a version management tool for developers, its alone is not a deployment tool.
 
 Setting It Up (An Example)
 --------------------------
@@ -131,37 +153,3 @@ Note, that most of the SMTP servers require "from" address of the message to be 
 At the end remove this test.
 
 The API of this library is the same as the original Email API. Read the CodeIgniter's manual about [Email Class](https://www.codeigniter.com/userguide3/libraries/email.html).
-
-Using Composer for Installing PHPMailer 6
------------------------------------------
-
-When CodeIgniter version is 3.1.0 or greater and PHP version is 5.5 or greater The library tries to find and load
-PHPMailer 6. Otherwise 5.2.28 is going to be used, its files are under the directory third_party/phpmailer in this project.
-If you intend to use PHPMailer 6, you need to use Composer for installing it.
-
-First, you need to have Composer locally or globally installed on your development machine see the instructions for that: https://getcomposer.org/doc/00-intro.md .
-
-Then you need to enable Composer to be used by CodeIgniter. Check this page from its documentation: https://www.codeigniter.com/userguide3/general/autoloader.html . You need to see or decide when your vendor/ directory is (to be) and within the
-CodeIgniter's configuration file application/config/config.php you need to set the configuration option $config['composer_autoload'] accordingly.
-
-Then, third, add to your composer.json uder the section "require" the following line:
-```
-"phpmailer/phpmailer": "^6.1.6"
-```
-It might need a comma at the end if the list "require" continues. Or, alternatively from command line interface run the following command:
-```
-composer require phpmailer/phpmailer:^6.1.6
-```
-The command
-```
-composer update
-```
-will install or update PHPMailer.
-
-Lately, from your development machine you are to upload on the production server the whole CodeIgniter-based project, together with the files composer.json, composer.lock, and the directory vendor/ .
-Avoid using Composer on your production server. Composer is a version management tool for developers, its alone is not a deployment tool.
-
-Readings
---------
-
-* https://www.youtube.com/watch?v=UGzZ0qyODDo - "Bibliotecas Codeigniter - PHPMailer", Wagner Faria dos Santos
