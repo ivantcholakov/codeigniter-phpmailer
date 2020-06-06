@@ -1,11 +1,11 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.3.5  
+Version: 1.4.0  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2020.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
-This library is intended to be compatible with CI 2.x and CI 3.x.
+This library is compatible with CodeIgniter 3.1.x and PHP >= 5.5.0.
 
 Tested on CodeIgniter 3.1.11 (September 19th, 2019) and PHPMailer Version 6.1.6 (May 27th, 2020).
 
@@ -24,7 +24,7 @@ You need to have Composer locally or globally installed on your development mach
 Enable Composer to be used by CodeIgniter. Check this page from its documentation: https://www.codeigniter.com/userguide3/general/autoloader.html . You need to see or decide when your vendor/ directory is (to be) and within the
 CodeIgniter's configuration file application/config/config.php you need to set the configuration option $config['composer_autoload'] accordingly.
 
-Then, third, add to your composer.json under the section "require" the following line:
+Then add to your composer.json under the section "require" the following line:
 ```
 "phpmailer/phpmailer": "^6.1.6"
 ```
