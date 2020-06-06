@@ -1,7 +1,7 @@
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
-Version: 1.4.3  
+Version: 1.4.4  
 Author: Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2020.  
 License: The MIT License (MIT), http://opensource.org/licenses/MIT
 
