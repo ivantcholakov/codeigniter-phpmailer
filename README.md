@@ -44,13 +44,13 @@ If PHPMailer was previously installed through Composer, uninstall it temporarily
 composer remove PHPMailer/PHPMailer
 ```
 
-Now install this library's package, it will install a correct version of PHPMailer:
+Now install this library's package, it will install a correct version of PHPMailer too:
 
 ```
 composer require ivantcholakov/codeigniter-phpmailer
 ```
 
-Create the file application/helpers/MY_email_helper.php with the following content:
+Create a file application/helpers/MY_email_helper.php with the following content:
 
 ```php
 <?php defined('BASEPATH') OR exit('No direct script access allowed.');
@@ -78,7 +78,7 @@ if (is_file(VENDORPATH.'ivantcholakov/codeigniter-phpmailer/helpers/MY_email_hel
 //}
 ```
 
-Create the file application/libraries/MY_Email.php with the following content:
+Create a file application/libraries/MY_Email.php with the following content:
 
 ```php
 <?php defined('BASEPATH') OR exit('No direct script access allowed.');
@@ -95,8 +95,8 @@ this package and PHPMailer would be done later easily:
 composer update
 ```
 
-Library's Configuration and Sending an E-mail (An Example)
-----------------------------------------------------------
+Configuration and Sending an E-mail (An Example)
+------------------------------------------------
 
 Create if necessary or edit the file `application/config/email.php` which contains
 the default settings for the email engine. For a Gmail account, the setting might be something like this:
