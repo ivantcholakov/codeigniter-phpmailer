@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/phpunit/phpunit/v)](//packagist.org/packages/phpunit/phpunit) [![Total Downloads](https://poser.pugx.org/phpunit/phpunit/downloads)](//packagist.org/packages/phpunit/phpunit) [![Latest Unstable Version](https://poser.pugx.org/phpunit/phpunit/v/unstable)](//packagist.org/packages/phpunit/phpunit) [![License](https://poser.pugx.org/phpunit/phpunit/license)](//packagist.org/packages/phpunit/phpunit)
+
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
 
@@ -9,10 +11,11 @@ This library is compatible with CodeIgniter 3.1.x and PHP >= 5.5.0.
 
 Tested on CodeIgniter 3.1.11 (September 19th, 2019) and PHPMailer Version 6.1.6 (May 27th, 2020).
 
-PHPMailer Links
----------------
+Links
+-----
 
-https://github.com/PHPMailer/PHPMailer
+Package: https://packagist.org/packages/ivantcholakov/codeigniter-phpmailer
+PHPMailer: https://github.com/PHPMailer/PHPMailer
 
 Installation
 ------------
