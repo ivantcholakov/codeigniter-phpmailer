@@ -15,6 +15,7 @@ Links
 -----
 
 Package: https://packagist.org/packages/ivantcholakov/codeigniter-phpmailer
+
 PHPMailer: https://github.com/PHPMailer/PHPMailer
 
 Installation
