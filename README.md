@@ -1,4 +1,7 @@
-[![Latest Stable Version](https://poser.pugx.org/ivantcholakov/codeigniter-phpmailer/v)](//packagist.org/packages/ivantcholakov/codeigniter-phpmailer) [![Total Downloads](https://poser.pugx.org/ivantcholakov/codeigniter-phpmailer/downloads)](//packagist.org/packages/ivantcholakov/codeigniter-phpmailer) [![Latest Unstable Version](https://poser.pugx.org/ivantcholakov/codeigniter-phpmailer/v/unstable)](//packagist.org/packages/ivantcholakov/codeigniter-phpmailer) [![License](https://poser.pugx.org/ivantcholakov/codeigniter-phpmailer/license)](//packagist.org/packages/ivantcholakov/codeigniter-phpmailer)
+[![Latest Stable Version](https://poser.pugx.org/ivantcholakov/codeigniter-phpmailer/v)](//packagist.org/packages/ivantcholakov/codeigniter-phpmailer)
+[![Total Downloads](https://poser.pugx.org/ivantcholakov/codeigniter-phpmailer/downloads)](//packagist.org/packages/ivantcholakov/codeigniter-phpmailer)
+[![Latest Unstable Version](https://poser.pugx.org/ivantcholakov/codeigniter-phpmailer/v/unstable)](//packagist.org/packages/ivantcholakov/codeigniter-phpmailer)
+[![License](https://poser.pugx.org/ivantcholakov/codeigniter-phpmailer/license)](//packagist.org/packages/ivantcholakov/codeigniter-phpmailer)
 
 A CodeIgniter compatible email-library powered by PHPMailer
 ===========================================================
