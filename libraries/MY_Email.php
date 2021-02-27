@@ -73,6 +73,8 @@ class MY_Email extends CI_Email {
         $this->CI->load->helper('email');
         $this->CI->load->helper('html');
 
+        isset(self::$func_overload) OR self::$func_overload = (defined('MB_OVERLOAD_STRING') && ((int) @ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING));
+
         // Set the default property 'debug_output' by using CLI autodetection.
         self::$default_properties['debug_output'] = (strpos(PHP_SAPI, 'cli') !== false OR defined('STDIN')) ? 'echo' : 'html';
 
