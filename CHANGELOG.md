@@ -1,3 +1,9 @@
+1.4.7 - 27-FEB-2021
+-------------------
+
+* Silent detection about ini_get('mbstring.func_overload') has been added.
+
+
 1.4.6 - 29-NOV-2020
 -------------------
 
