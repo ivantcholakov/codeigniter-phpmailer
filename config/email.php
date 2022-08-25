@@ -26,6 +26,20 @@ $config['bcc_batch_mode']   = false;
 $config['bcc_batch_size']   = 200;
 $config['encoding']         = '8bit';                   // The body encoding. For CodeIgniter: '8bit' or '7bit'. For PHPMailer: '8bit', '7bit', 'binary', 'base64', or 'quoted-printable'.
 
+// XOAUTH2 mechanism for authentication.
+// See https://github.com/PHPMailer/PHPMailer/wiki/Using-Gmail-with-XOAUTH2
+$config['oauth_type']          = '';                    // XOAUTH2 authentication mechanism:
+                                                        // ''                  - disabled;
+                                                        // 'xoauth2'           - custom implementation;
+                                                        // 'xoauth2_google'    - Google provider;
+                                                        // 'xoauth2_yahoo'     - Yahoo provider;
+                                                        // 'xoauth2_microsoft' - Microsoft provider.
+$config['oauth_instance']      = null;                  // Initialized instance of \PHPMailer\PHPMailer\OAuth (OAuthTokenProvider interface) that contains a custom token provider. Needed for 'xoauth2' custom implementation only. 
+$config['oauth_user_email']    = '';                    // If this option is an empty string or null, $config['smtp_user'] will be used.
+$config['oauth_client_id']     = '';
+$config['oauth_client_secret'] = '';
+$config['oauth_refresh_token'] = '';
+
 // DKIM Signing
 // See https://yomotherboard.com/how-to-setup-email-server-dkim-keys/
 // See http://stackoverflow.com/questions/24463425/send-mail-in-phpmailer-using-dkim-keys

@@ -1,3 +1,10 @@
+1.5.0 - 25-AUG-2022
+-------------------
+
+* Requires PHP >= 7.3.0.
+* XOAUTH2 authentication has been added for enail accounts hosted by Google, Yahoo, Microsoft.
+
+
 1.4.7 - 27-FEB-2021
 -------------------
 

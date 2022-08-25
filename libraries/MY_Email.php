@@ -2,13 +2,13 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.4.6
- * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2020.
+ * Version: 1.5.0
+ * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2022.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
- * Tested on CodeIgniter 3.1.11 (September 19th, 2019) and
- * PHPMailer Version 6.2.0 (November 25th, 2020).
+ * Tested on CodeIgniter 3.1.13 (March 3rd, 2022) and
+ * PHPMailer Version 6.6.4 (August 22nd, 2022).
  */
 
 class MY_Email extends CI_Email {
@@ -46,6 +46,12 @@ class MY_Email extends CI_Email {
         'encoding' => '8bit',
         'smtp_auto_tls' => true,
         'smtp_conn_options' => array(),
+        'oauth_type' => '',
+        'oauth_instance' => null,
+        'oauth_user_email' => '',
+        'oauth_client_id' => '',
+        'oauth_client_secret' => '',
+        'oauth_refresh_token' => '',
         'dkim_domain' => '',
         'dkim_private' => '',
         'dkim_private_string' => '',
@@ -556,6 +562,100 @@ class MY_Email extends CI_Email {
                 //
             }
 
+            switch ($this->oauth_type) {
+
+                case 'xoauth2':
+
+                    $this->phpmailer->AuthType = 'XOAUTH2';
+
+                    $this->phpmailer->setOAuth($this->oauth_instance);
+
+                    break;
+
+                case 'xoauth2_google':
+
+                    $this->phpmailer->AuthType = 'XOAUTH2';
+
+                    $provider = new \League\OAuth2\Client\Provider\Google(
+                        array(
+                            'clientId' => $this->oauth_client_id,
+                            'clientSecret' => $this->oauth_client_secret,
+                        )
+                    );
+
+                    $this->phpmailer->setOAuth(new \PHPMailer\PHPMailer\OAuth(
+                            array(
+                                'provider' => $provider,
+                                'clientId' => $this->oauth_client_id,
+                                'clientSecret' => $this->oauth_client_secret,
+                                'refreshToken' => $this->oauth_refresh_token,
+                                'userName' => $this->oauth_user_email != '' ? $this->oauth_user_email : $this->smtp_user,
+                            )
+                        )
+                    );
+
+                    break;
+
+                case 'xoauth2_yahoo':
+
+                    $this->phpmailer->AuthType = 'XOAUTH2';
+
+                    $provider = new \Hayageek\OAuth2\Client\Provider\Yahoo(
+                        array(
+                            'clientId' => $this->oauth_client_id,
+                            'clientSecret' => $this->oauth_client_secret,
+                        )
+                    );
+
+                    $this->phpmailer->setOAuth(new \PHPMailer\PHPMailer\OAuth(
+                            array(
+                                'provider' => $provider,
+                                'clientId' => $this->oauth_client_id,
+                                'clientSecret' => $this->oauth_client_secret,
+                                'refreshToken' => $this->oauth_refresh_token,
+                                'userName' => $this->oauth_user_email != '' ? $this->oauth_user_email : $this->smtp_user,
+                            )
+                        )
+                    );
+
+                    break;
+
+                case 'xoauth2_microsoft':
+
+                    $this->phpmailer->AuthType = 'XOAUTH2';
+
+                    $provider = new \Stevenmaguire\OAuth2\Client\Provider\Microsoft(
+                        array(
+                            'clientId' => $this->oauth_client_id,
+                            'clientSecret' => $this->oauth_client_secret,
+                        )
+                    );
+
+                    $this->phpmailer->setOAuth(new \PHPMailer\PHPMailer\OAuth(
+                            array(
+                                'provider' => $provider,
+                                'clientId' => $this->oauth_client_id,
+                                'clientSecret' => $this->oauth_client_secret,
+                                'refreshToken' => $this->oauth_refresh_token,
+                                'userName' => $this->oauth_user_email != '' ? $this->oauth_user_email : $this->smtp_user,
+                            )
+                        )
+                    );
+
+                    break;
+
+                default:
+
+                    $this->phpmailer->AuthType = '';
+
+                    $reflection = new \ReflectionClass($this->phpmailer);
+                    $property = $reflection->getProperty('oauth');
+                    $property->setAccessible(true);
+                    $property->setValue($this->phpmailer, null);
+
+                    break;
+            }
+
             $result = (bool) $this->phpmailer->send();
 
             if ($result) {
@@ -640,6 +740,7 @@ class MY_Email extends CI_Email {
 
     public function set_protocol($protocol = 'mail') {
 
+        $protocol = (string) $protocol;
         $protocol = in_array($protocol, self::$protocols, TRUE) ? strtolower($protocol) : 'mail';
 
         $this->properties['protocol'] = $protocol;
@@ -1055,6 +1156,65 @@ class MY_Email extends CI_Email {
         if ($this->mailer_engine == 'phpmailer') {
             $this->phpmailer->SMTPOptions = $value;
         }
+
+        return $this;
+    }
+
+    // XOAUTH2 settings.
+
+    public function set_oauth_type($value) {
+
+        $value = strtolower(trim((string) $value));
+
+        if ($value != '' && strpos($value, 'xoauth2') === false) {
+            $value = 'xoauth2';
+        }
+
+        $this->properties['oauth_type'] = $value;
+
+        return $this;
+    }
+
+    public function set_oauth_instance($value) {
+
+        // An object that implements PHPMailer OAuthTokenProvider interface or null is expected here.
+        $this->properties['oauth_instance'] = $value;
+
+        return $this;
+    }
+
+    public function set_oauth_user_email($value) {
+
+        $value = (string) $value;
+
+        $this->properties['oauth_user_email'] = $value;
+
+        return $this;
+    }
+
+    public function set_oauth_client_id($value) {
+
+        $value = (string) $value;
+
+        $this->properties['oauth_client_id'] = $value;
+
+        return $this;
+    }
+
+    public function set_oauth_client_secret($value) {
+
+        $value = (string) $value;
+
+        $this->properties['oauth_client_secret'] = $value;
+
+        return $this;
+    }
+
+    public function set_oauth_refresh_token($value) {
+
+        $value = (string) $value;
+
+        $this->properties['oauth_refresh_token'] = $value;
 
         return $this;
     }
