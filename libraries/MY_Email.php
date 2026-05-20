@@ -2,13 +2,13 @@
 
 /**
  * CodeIgniter compatible email-library powered by PHPMailer.
- * Version: 1.5.0
- * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2022.
+ * Version: 1.6.0
+ * @author Ivan Tcholakov <ivantcholakov@gmail.com>, 2012-2026.
  * @license The MIT License (MIT), http://opensource.org/licenses/MIT
  * @link https://github.com/ivantcholakov/codeigniter-phpmailer
  *
  * Tested on CodeIgniter 3.1.13 (March 3rd, 2022) and
- * PHPMailer Version 6.6.4 (August 22nd, 2022).
+ * PHPMailer Version 7.1.1 (May 18th, 2026).
  */
 
 class MY_Email extends CI_Email {
@@ -120,7 +120,7 @@ class MY_Email extends CI_Email {
 
     public function __destruct() {
 
-        if (is_callable('parent::__destruct')) {
+        if (is_callable('CI_Email::__destruct')) {
             parent::__destruct();
         }
     }
@@ -647,11 +647,7 @@ class MY_Email extends CI_Email {
                 default:
 
                     $this->phpmailer->AuthType = '';
-
-                    $reflection = new \ReflectionClass($this->phpmailer);
-                    $property = $reflection->getProperty('oauth');
-                    $property->setAccessible(true);
-                    $property->setValue($this->phpmailer, null);
+                    $this->phpmailer->oauth = null;
 
                     break;
             }
@@ -703,7 +699,9 @@ class MY_Email extends CI_Email {
                     throw new \Exception('The class PHPMailer\\PHPMailer\\PHPMailer can not be found.');
                 }
 
-                $this->phpmailer = new \PHPMailer\PHPMailer\PHPMailer();
+                require __DIR__ . '/MY_PHPMailer.php';
+
+                $this->phpmailer = new \MY_PHPMailer();
                 \PHPMailer\PHPMailer\PHPMailer::$validator = 'valid_email';
             }
         }
@@ -1003,13 +1001,7 @@ class MY_Email extends CI_Email {
         $this->properties['newline'] = $newline;
 
         if ($this->mailer_engine == 'phpmailer') {
-
-            if (property_exists('\\PHPMailer\\PHPMailer\\PHPMailer', 'LE')) {
-
-                $reflection = new \ReflectionProperty('\\PHPMailer\\PHPMailer\\PHPMailer', 'LE');
-                $reflection->setAccessible(true);
-                $reflection->setValue(null, $newline);
-            }
+            \MY_PHPMailer::$LE = $newline;
         }
 
         return $this;
